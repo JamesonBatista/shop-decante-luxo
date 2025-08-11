@@ -1,0 +1,158 @@
+/* Importa o CSS principal */
+@import url('./styles.css');
+
+/* Ajustes específicos para a página de pedido */
+
+/* Container do pedido — centralizado, com largura máxima */
+.container {
+	max-width: 600px;
+	margin: 5rem auto 3rem auto;
+	padding: 2rem 1rem 1rem;
+	display: block;
+	/* fluxo normal vertical */
+}
+
+/* Título do pedido */
+.container h2 {
+	color: #d4c06d;
+	font-family: 'Playfair Display', serif;
+	margin-bottom: 1rem;
+}
+
+/* Formulário de dados */
+#order-form {
+	display: none;
+	margin-top: 2rem;
+	color: #f5f5f7;
+	font-family: 'Montserrat', sans-serif;
+	font-size: 0.95rem;
+}
+
+/* Estilos dos labels */
+#order-form label {
+	font-weight: 600;
+}
+
+/* Inputs e select do formulário */
+#order-form input,
+#order-form select {
+	width: 100%;
+	padding: 0.4rem;
+	margin-bottom: 0.8rem;
+	border-radius: 6px;
+	border: 1px solid #ccc;
+	font-family: 'Montserrat', sans-serif;
+	font-size: 1rem;
+	box-sizing: border-box;
+}
+
+/* Botão de confirmação de pedido */
+#order-form button[type="submit"] {
+	width: 100%;
+	padding: 0.7rem 0;
+	background: #d4c06d;
+	border: none;
+	border-radius: 8px;
+	font-weight: 700;
+	cursor: pointer;
+	text-transform: uppercase;
+	font-family: 'Montserrat', sans-serif;
+	font-size: 1rem;
+	color: #1c1b1b;
+	transition: background-color 0.3s ease;
+}
+
+#order-form button[type="submit"]:hover {
+	background-color: #b99c4a;
+	/* tom um pouco mais escuro no hover */
+}
+
+/* Botão "Voltar" no header, se usado */
+#back-to-store {
+	color: #d4c06d;
+	text-decoration: none;
+	font-weight: 700;
+	font-family: 'Montserrat', sans-serif;
+	font-size: 0.95rem;
+	padding: 0.2rem 0.5rem;
+	border: 2px solid transparent;
+	border-radius: 6px;
+	transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+#back-to-store:hover {
+	background-color: #d4c06d;
+	color: #1c1b1b;
+	border-color: #d4c06d;
+}
+
+/* Itens do carrinho (container e botões) */
+.cart-item {
+	border-bottom: 1px solid #d4c06d;
+	padding-bottom: 0.6rem;
+	margin-bottom: 1rem;
+	color: #f5f5f7;
+	font-family: 'Montserrat', sans-serif;
+	font-size: 1rem;
+}
+
+.cart-item strong {
+	color: #d4c06d;
+}
+
+.cart-item button {
+	margin-top: 0.4rem;
+	background: transparent;
+	border: 1.5px solid #d45f5f;
+	border-radius: 6px;
+	padding: 0.3rem 0.6rem;
+	color: #d45f5f;
+	font-family: 'Montserrat', sans-serif;
+	font-weight: 600;
+	cursor: pointer;
+	transition: background-color 0.3s, color 0.3s;
+	user-select: none;
+	display: inline-block;
+}
+
+.cart-item button:hover {
+	background-color: #d45f5f;
+	color: #1c1b1b;
+}
+
+/* Botões incrementar e decrementar (simples estilo inline) */
+.cart-item .btn-increment,
+.cart-item .btn-decrement {
+	background: transparent;
+	border: 1.5px solid #d4c06d;
+	border-radius: 4px;
+	color: #d4c06d;
+	font-weight: 700;
+	cursor: pointer;
+	padding: 0 0.4rem;
+	margin: 0 0.2rem;
+	user-select: none;
+	transition: background-color 0.3s, color 0.3s;
+}
+
+.cart-item .btn-increment:hover,
+.cart-item .btn-decrement:hover {
+	background-color: #d4c06d;
+	color: #1c1b1b;
+}
+
+/* Estilo do botão de enviar pedido */
+#send-order-button {
+	width: 100%;
+	padding: 0.7rem 0;
+	background: #d4c06d;
+	border: none;
+	border-radius: 8px;
+	font-weight: 700;
+	cursor: pointer;
+	text-transform: uppercase;
+	font-family: 'Montserrat', sans-serif;
+	font-size: 1rem;
+	color: #1c1b1b;
+	transition: background-color 0.3s ease;
+}

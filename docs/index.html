@@ -211,7 +211,11 @@
     }
 
     // Eventos dos ícones
-    cartIcon.addEventListener('click', openCart);
+ cartIcon.addEventListener('click', () => {
+  // Salva o carrinho no localStorage e navega para a página de pedido
+  localStorage.setItem('cart', JSON.stringify(cart));
+  window.location.href = 'pedido.html';
+});
     closeCartBtn.addEventListener('click', closeCart);
 
     // Fechar modal clicando fora do conteúdo

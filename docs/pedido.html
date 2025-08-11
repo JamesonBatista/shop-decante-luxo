@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<title>Seu Pedido - Sephora Decant</title>
+	<link rel="stylesheet" href="pedido-styles.css" />
+	<link href="https://fonts.googleapis.com/css2?family=Playfair+Display&family=Montserrat&display=swap"
+		rel="stylesheet" />
+</head>
+
+<body>
+
+	<header>
+		<div class="header-texts">
+			<h1>Sephora Decant</h1>
+			<p>Decantes de perfumes caros com elegância e luxo</p>
+		</div>
+
+		<a href="index.html" title="Voltar para a loja" aria-label="Voltar para a loja" id="back-to-store">
+			← Voltar
+		</a>
+	</header>
+
+	<main class="container">
+		<h2 id="cart-modal-title">Seu Pedido</h2>
+		<div id="cart-items">
+			<!-- Itens do carrinho carregados via JS -->
+		</div>
+
+		<div id="cart-total"></div>
+
+		<button id="btn-send-order">Enviar Pedido</button>
+
+		<form id="order-form">
+			<h3>Dados para entrega</h3>
+
+			<label for="name">Nome Completo:</label>
+			<input type="text" id="name" name="name" required />
+
+			<label for="address">Endereço:</label>
+			<input type="text" id="address" name="address" required />
+
+			<label for="city">Cidade:</label>
+			<input type="text" id="city" name="city" required />
+
+			<label for="state">UF:</label>
+			<select id="state" name="state" required>
+				<option value="">Selecione</option>
+				<option value="AC">AC</option>
+				<option value="AL">AL</option>
+				<option value="AP">AP</option>
+				<option value="AM">AM</option>
+				<option value="BA">BA</option>
+				<option value="CE">CE</option>
+				<option value="DF">DF</option>
+				<option value="ES">ES</option>
+				<option value="GO">GO</option>
+				<option value="MA">MA</option>
+				<option value="MT">MT</option>
+				<option value="MS">MS</option>
+				<option value="MG">MG</option>
+				<option value="PA">PA</option>
+				<option value="PB">PB</option>
+				<option value="PR">PR</option>
+				<option value="PE">PE</option>
+				<option value="PI">PI</option>
+				<option value="RJ">RJ</option>
+				<option value="RN">RN</option>
+				<option value="RS">RS</option>
+				<option value="RO">RO</option>
+				<option value="RR">RR</option>
+				<option value="SC">SC</option>
+				<option value="SP">SP</option>
+				<option value="SE">SE</option>
+				<option value="TO">TO</option>
+			</select>
+
+			<label for="cep">CEP:</label>
+			<input type="text" id="cep" name="cep" required pattern="[0-9]{5}-?[0-9]{3}" placeholder="00000-000" />
+
+			<button type="submit">Confirmar Pedido</button>
+		</form>
+	</main>
+
+	<script>
+		// Recupera carrinho do localStorage
+		let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+		const cartItemsEl = document.getElementById('cart-items');
+		const cartTotalEl = document.getElementById('cart-total');
+		const btnSendOrder = document.getElementById('btn-send-order');
+		const orderForm = document.getElementById('order-form');
+
+		function renderCartItems() {
+			if (cart.length === 0) {
+				cartItemsEl.innerHTML = '<p>Seu carrinho está vazio.</p>';
+				cartTotalEl.textContent = '';
+				btnSendOrder.style.display = 'none';
+				orderForm.style.display = 'none';
+				return;
+			}
+
+			btnSendOrder.style.display = 'block';
+
+			cartItemsEl.innerHTML = cart.map((item, index) => {
+				const price = item.volume === '2ml' ? item.perfume.value.value2ml :
+					item.volume === '5ml' ? item.perfume.value.value5ml :
+						item.perfume.value.value10ml;
+				const subtotal = price * item.quantity;
+
+				return `
+        <div class="cart-item" data-index="${index}">
+          <strong>${item.perfume.name}</strong> (${item.volume})<br/>
+          Quantidade: 
+          <button class="btn-decrement" aria-label="Diminuir quantidade">-</button>
+          ${item.quantity}
+          <button class="btn-increment" aria-label="Aumentar quantidade">+</button><br/>
+          Preço unitário: R$ ${price}<br/>
+          Subtotal: R$ ${subtotal}<br/>
+          <button class="btn-remove" aria-label="Remover item">Remover</button>
+        </div>
+      `;
+			}).join('');
+
+			// Atualizar total
+			const total = cart.reduce((acc, item) => {
+				const price = item.volume === '2ml' ? item.perfume.value.value2ml :
+					item.volume === '5ml' ? item.perfume.value.value5ml :
+						item.perfume.value.value10ml;
+				return acc + price * item.quantity;
+			}, 0);
+			cartTotalEl.textContent = `Total: R$ ${total}`;
+
+			// Adicionar eventos aos botões
+			cartItemsEl.querySelectorAll('.btn-remove').forEach((btn, i) => {
+				btn.onclick = () => {
+					cart.splice(i, 1);
+					saveAndRender();
+				};
+			});
+
+			cartItemsEl.querySelectorAll('.btn-decrement').forEach((btn, i) => {
+				btn.onclick = () => {
+					if (cart[i].quantity > 1) {
+						cart[i].quantity--;
+					} else {
+						cart.splice(i, 1);
+					}
+					saveAndRender();
+				};
+			});
+
+			cartItemsEl.querySelectorAll('.btn-increment').forEach((btn, i) => {
+				btn.onclick = () => {
+					cart[i].quantity++;
+					saveAndRender();
+				};
+			});
+		}
+
+		function saveAndRender() {
+			localStorage.setItem('cart', JSON.stringify(cart));
+			renderCartItems();
+		}
+
+		btnSendOrder.addEventListener('click', () => {
+			orderForm.style.display = 'block';
+			btnSendOrder.style.display = 'none';
+			window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+		});
+
+		orderForm.addEventListener('submit', (e) => {
+			e.preventDefault();
+
+			const dataUser = {
+				nome: orderForm.name.value.trim(),
+				endereco: orderForm.address.value.trim(),
+				cidade: orderForm.city.value.trim(),
+				uf: orderForm.state.value,
+				cep: orderForm.cep.value.trim(),
+				pedido: cart
+			};
+
+			if (!dataUser.uf) {
+				alert('Por favor, selecione o UF');
+				return;
+			}
+
+			alert(`Obrigado pelo pedido, ${dataUser.nome}! Seu pedido foi recebido.`);
+
+			cart = [];
+			localStorage.removeItem('cart');
+			renderCartItems();
+			orderForm.reset();
+			orderForm.style.display = 'none';
+			btnSendOrder.style.display = 'block';
+		});
+
+		renderCartItems();
+	</script>
+
+</body>
+
+</html>
