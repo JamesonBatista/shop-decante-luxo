@@ -135,7 +135,7 @@ header p {
 
   .container {
     grid-template-columns: repeat(2, 1fr);
-    padding: 5rem 0.5rem 1rem;
+    padding: 8rem 0.5rem 1rem;
     gap: 1rem;
     margin: 1rem auto 2rem;
   }
@@ -389,4 +389,72 @@ footer {
 #cart-items .btn-remove:hover {
   background-color: #d45f5f;
   color: #1c1b1b;
+}
+/* Estilo botão hamburger */
+#hamburger-btn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.3s ease;
+  flex-shrink: 0;
+}
+
+#hamburger-btn:hover {
+  transform: scale(1.1);
+}
+
+/* Menu oculto por padrão */
+.menu-list {
+  position: absolute;
+  top: 60px; /* abaixo do header, ajuste conforme necessário */
+  right: 1.5rem;
+  background: #1f1e1e;
+  border: 2px solid #d4c06d;
+  border-radius: 10px;
+  list-style: none;
+  padding: 0.5rem 1rem;
+  box-shadow: 0 0 10px #bfa05a;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  min-width: 160px;
+  z-index: 1100;
+}
+
+/* Esconde o menu quando hidden */
+.menu-list[hidden] {
+  display: none !important;
+}
+
+/* Estilo dos links do menu */
+.menu-list a {
+  color: #d4c06d;
+  text-decoration: none;
+  font-weight: 600;
+  font-family: 'Montserrat', sans-serif;
+  padding: 0.4rem 0.2rem;
+  transition: background-color 0.25s, color 0.25s;
+  border-radius: 6px;
+  display: block;
+}
+
+.menu-list a:hover {
+  background-color: #d4c06d;
+  color: #1c1b1b;
+}
+
+/* Responsividade: esconder menu no desktop (opcional), mostrar hamburger */
+@media (min-width: 900px) {
+  /* Você pode esconder esse menu mobile e criar um menu desktop */
+  /* Exemplo: */
+  #hamburger-btn {
+    display: none;
+  }
+  .menu-list {
+    display: none !important;
+  }
 }
