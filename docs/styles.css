@@ -21,7 +21,6 @@ header {
   flex-wrap: wrap; /* permite subtítulo na linha de baixo */
   gap: 1.5rem;
   z-index: 1000;
-  min-height: 100px; /* espaço para título + subtítulo */
 }
 
 /* restante do seu CSS permanece igual... */
@@ -125,7 +124,7 @@ header p {
   }
   .container {
     grid-template-columns: repeat(2, 1fr);
-    padding: 10rem 0.5rem 1rem;
+    padding: 8rem 0.5rem 1rem;
     gap: 1rem;
     margin: 1rem auto 2rem;
   }
