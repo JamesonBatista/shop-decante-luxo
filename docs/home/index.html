@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Sephora Decant - Luxo em Perfumes</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&family=Montserrat&display=swap" rel="stylesheet" />
+</head>
+<body>
+  <header>
+    <h1>Sephora Decant</h1>
+    <p>Decantes de perfumes caros com elegância e luxo</p>
+  </header>
+
+  <main class="container" id="perfumes-container">
+    <!-- Cards serão inseridos aqui via JS -->
+  </main>
+
+  <footer>
+    &copy; 2025 Sephora Decant. Luxo, exclusividade e sofisticação.
+  </footer>
+
+  <script>
+    const perfumesData = [
+      {
+        "image": "https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=crop&w=400&q=80",
+        "name": "Royal Oud Exquisite",
+        "description": "Uma experiência rica e intensa de madeira oud com toques orientais e especiarias raras.",
+        "value": {
+          "value2ml": 30,
+          "value5ml": 60,
+          "value10ml": 120
+        }
+      },
+      {
+        "image": "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=80",
+        "name": "Amber Luxe",
+        "description": "Elegância clássica com notas de âmbar dourado, baunilha e flores nobres.",
+        "value": {
+          "value2ml": 25,
+          "value5ml": 50,
+          "value10ml": 110
+        }
+      },
+      {
+        "image": "https://images.unsplash.com/photo-1560184897-5551d52cf20e?auto=format&fit=crop&w=400&q=80",
+        "name": "Saffron Majesty",
+        "description": "Perfume sofisticado com açafrão, musk branco e flores orientais.",
+        "value": {
+          "value2ml": 35,
+          "value5ml": 70,
+          "value10ml": 140
+        }
+      }
+    ];
+
+    const container = document.getElementById('perfumes-container');
+
+<!-- dentro da função createCard, atualize para: -->
+
+function createCard(perfume) {
+  const card = document.createElement('div');
+  card.classList.add('card');
+
+  card.innerHTML = `
+    <img src="${perfume.image}" alt="${perfume.name}">
+    <div class="card-content">
+      <h2>${perfume.name}</h2>
+      <p class="description">${perfume.description}</p>
+
+      <div class="volume-buttons">
+        <button class="btn-volume active" data-volume="2ml">2ml</button>
+        <button class="btn-volume" data-volume="5ml">5ml</button>
+        <button class="btn-volume" data-volume="10ml">10ml</button>
+      </div>
+
+      <div class="price-display">
+        <p>Preço: R$ <span class="price-value">${perfume.value.value2ml}</span></p>
+      </div>
+    </div>
+  `;
+
+  // Seleciona os botões e o elemento do preço
+  const btns = card.querySelectorAll('.btn-volume');
+  const priceValue = card.querySelector('.price-value');
+
+  btns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      // Remove classe active dos outros
+      btns.forEach(b => b.classList.remove('active'));
+      // Adiciona active no clicado
+      btn.classList.add('active');
+
+      // Atualiza o preço conforme o botão clicado
+      const vol = btn.getAttribute('data-volume');
+      if (vol === '2ml') priceValue.textContent = perfume.value.value2ml;
+      else if (vol === '5ml') priceValue.textContent = perfume.value.value5ml;
+      else if (vol === '10ml') priceValue.textContent = perfume.value.value10ml;
+    });
+  });
+
+  return card;
+}
+
+
+    function loadPerfumes() {
+      perfumesData.forEach(perfume => {
+        const card = createCard(perfume);
+        container.appendChild(card);
+      });
+    }
+
+    loadPerfumes();
+  </script>
+</body>
+</html>
