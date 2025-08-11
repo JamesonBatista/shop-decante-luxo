@@ -6,13 +6,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Parfum d'Or - Luxo em Perfumes</title>
   <link rel="stylesheet" href="styles.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&family=Montserrat&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&family=Montserrat&display=swap"
+    rel="stylesheet" />
 </head>
 
 <body>
   <header>
     <div class="header-texts">
-      <h1>SParfum d'Or</h1>
+      <h1>Parfum d'Or</h1>
       <p>Decantes de Luxo em cada Gota</p>
     </div>
 
@@ -28,7 +29,7 @@
       </button>
       <ul id="menu-list" class="menu-list" hidden>
         <li><a href="index.html">Início</a></li>
-        <li><a href="produtos1.html">Produtos 1</a></li>
+        <li><a href="cosmeticos.html">Cosméticos</a></li>
         <li><a href="produtos2.html">Produtos 2</a></li>
         <li><a href="pedido.html">Pedido</a></li>
         <!-- outros links aqui -->
@@ -143,9 +144,9 @@
           }
           return response.json();
         })
-        .then(perfumesData => {
-          perfumesData.forEach(perfume => {
-            const card = createCard(perfume);
+        .then(data => {
+          data.perfumes.forEach(dataObject => {
+            const card = createCard(dataObject);
             container.appendChild(card);
           });
         })

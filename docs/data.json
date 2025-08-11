@@ -1,32 +1,46 @@
-[
-  {
-    "image": "https://cdn.awsli.com.br/600x450/1384/1384913/produto/57076554/513369533d.jpg",
-    "name": "Royal Oud Exquisite",
-    "description": "Uma experiência rica e intensa de madeira oud com toques orientais e especiarias raras.",
-    "value": {
-      "value2ml": 30,
-      "value5ml": 60,
-      "value10ml": 120
+{
+  "perfumes": [
+    {
+      "image": "https://cdn.awsli.com.br/600x450/1384/1384913/produto/57076554/513369533d.jpg",
+      "name": "Royal Oud Exquisite",
+      "description": "Uma experiência rica e intensa de madeira oud com toques orientais e especiarias raras.",
+      "value": {
+        "value2ml": 30,
+        "value5ml": 60,
+        "value10ml": 120
+      }
+    },
+    {
+      "image": "https://acdn-us.mitiendanube.com/stores/004/823/488/products/16752gg-529b6ee31bb5a2470417310016959884-1024-1024.png",
+      "name": "Amber Luxe",
+      "description": "Elegância clássica com notas de âmbar dourado, baunilha e flores nobres.",
+      "value": {
+        "value2ml": 25,
+        "value5ml": 50,
+        "value10ml": 110
+      }
+    },
+    {
+      "image": "https://shopluxo.vtexassets.com/arquivos/ids/208213/libre-yves-saint-laurent-perfume-feminino-eau-de-parfum-30ml.jpg?v=637195556089000000",
+      "name": "Saffron Majesty",
+      "description": "Perfume sofisticado com açafrão, musk branco e flores orientais.",
+      "value": {
+        "value2ml": 35,
+        "value5ml": 70,
+        "value10ml": 140
+      }
     }
-  },
-  {
-    "image": "https://acdn-us.mitiendanube.com/stores/004/823/488/products/16752gg-529b6ee31bb5a2470417310016959884-1024-1024.png",
-    "name": "Amber Luxe",
-    "description": "Elegância clássica com notas de âmbar dourado, baunilha e flores nobres.",
-    "value": {
-      "value2ml": 25,
-      "value5ml": 50,
-      "value10ml": 110
+  ],
+  "cosmeticos": [
+    {
+      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRCa0oDqiAJZe-aDtNeSy7jtzsz5GiRSm2Q3h1LzJy4gyAUXWxdgeOCTh1TX4CNi21RjmI&usqp=CAU",
+      "name": "Hidratante Louis Vuitton",
+      "description": "Uma experiência rica e intensa de madeira oud com toques orientais e especiarias raras.",
+      "value": {
+        "value2ml": 30,
+        "value5ml": 60,
+        "value10ml": 120
+      }
     }
-  },
-  {
-    "image": "https://shopluxo.vtexassets.com/arquivos/ids/208213/libre-yves-saint-laurent-perfume-feminino-eau-de-parfum-30ml.jpg?v=637195556089000000",
-    "name": "Saffron Majesty",
-    "description": "Perfume sofisticado com açafrão, musk branco e flores orientais.",
-    "value": {
-      "value2ml": 35,
-      "value5ml": 70,
-      "value10ml": 140
-    }
-  }
-]
+  ]
+}
