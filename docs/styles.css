@@ -44,8 +44,6 @@ header {
 }
 
 header h1 {
-  font-family: 'Playfair Display', serif;
-  font-weight: 900;
   font-size: 2.4rem;
   /* color fallback para quando o efeito não funcionar */
   color: #f0e6c8;
@@ -53,33 +51,10 @@ header h1 {
   letter-spacing: 0.15em;
   margin: 0;
   line-height: 1.1;
-  overflow-wrap: break-word;
 
-  /* Efeito luminoso animado */
-  background: linear-gradient(90deg,
-      #f0e6c8 0%,
-      #fffacd 20%,
-      #f0e6c8 40%,
-      #f0e6c8 100%);
-  background-size: 200% 100%;
-  background-clip: text;
-  -webkit-background-clip: text;
-  /* importante para Safari/Chrome */
-  color: transparent;
-  -webkit-text-fill-color: transparent;
-  /* importante para Safari/Chrome */
-  animation: shine 3s linear infinite;
 }
 
-@keyframes shine {
-  0% {
-    background-position: 200% 0;
-  }
 
-  100% {
-    background-position: -200% 0;
-  }
-}
 
 
 
@@ -168,6 +143,7 @@ header p {
   /* Ajuste no header-texts para quebra natural */
   .header-texts {
     max-width: 100%;
+    text-align: center;
   }
 
   header h1,
@@ -197,7 +173,7 @@ header p {
   }
 
   .btn-volume {
-    padding: 0.4rem 0;
+    padding: 0.4rem 3px;
     font-size: 0.85rem;
   }
 
@@ -277,7 +253,7 @@ header p {
 
 .btn-volume {
   flex: 1;
-  padding: 0.5rem 0;
+  padding: 0.5rem 3px;
   background: transparent;
   border: 2px solid #d4c06d;
   border-radius: 8px;
