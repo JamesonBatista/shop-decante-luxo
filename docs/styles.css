@@ -53,8 +53,10 @@ header h1 {
 .card img {
   width: 100%;
   height: 250px;
-  object-fit: cover;
-  border-bottom: 2px solid #bfa05a;
+  object-fit: contain; /* para manter toda a imagem visível */
+  display: block;
+  margin: auto; /* centraliza horizontalmente */
+  background-color: #1f1e1e; /* opcional, para o fundo do espaço da imagem */
 }
 
 .card-content {
