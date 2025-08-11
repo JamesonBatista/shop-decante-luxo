@@ -1,110 +1,236 @@
+/* Reset básico e corpo */
 body {
   margin: 0;
   background: linear-gradient(135deg, #2b2a2a, #1c1b1b);
   font-family: 'Montserrat', sans-serif;
   color: #f5f5f7;
+  min-height: 100vh;
+  padding-top: 110px; /* espaço para header fixo alto com subtítulo */
+  box-sizing: border-box;
 }
 
+/* Header fixo com layout horizontal */
 header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
   background: linear-gradient(45deg, #bfa05a, #6f592a);
-  padding: 2rem 1rem;
-  text-align: center;
   box-shadow: 0 4px 10px rgba(191, 160, 90, 0.7);
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: nowrap;
+  gap: 1.5rem;
+  z-index: 1000;
+  min-height: 80px;
 }
 
+/* Container vertical para título + subtítulo */
+.header-texts {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  min-width: 0; /* evita overflow */
+  max-width: calc(100% - 60px); /* espaço para ícone do carrinho */
+  white-space: normal; /* para permitir quebra */
+}
+
+/* Título do site */
 header h1 {
   font-family: 'Playfair Display', serif;
   font-weight: 700;
-  font-size: 3rem;
+  font-size: 2.4rem;
+  color: #f0e6c8;
   text-transform: uppercase;
   letter-spacing: 0.15em;
-  color: #f0e6c8;
   margin: 0;
   text-shadow: 0 0 8px #d4c06d;
+  line-height: 1.1;
+  overflow-wrap: break-word;
 }
 
+/* Subtítulo do site */
+header p {
+  margin: 4px 0 0;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1.05rem;
+  color: #f0e6c8cc;
+  letter-spacing: 0.03em;
+  overflow-wrap: break-word;
+}
+
+/* Ícone do carrinho com contador */
+#cart-icon {
+  position: relative;
+  cursor: pointer;
+  width: 36px;
+  height: 36px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#cart-icon svg {
+  width: 24px;
+  height: 24px;
+  fill: #d4c06d;
+  filter: drop-shadow(0 0 2px #bfa05a);
+  transition: transform 0.3s ease;
+}
+
+#cart-icon:hover svg {
+  transform: scale(1.2);
+}
+
+#cart-count {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  background: #d4c06d;
+  color: #1c1b1b;
+  font-weight: 700;
+  font-size: 0.75rem;
+  border-radius: 50%;
+  width: 18px;
+  height: 18px;
+  display: none; /* inicia oculto */
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 0 6px #bfa05a;
+  user-select: none;
+  pointer-events: none;
+}
+
+/* Container dos cards */
 .container {
   max-width: 1200px;
-  margin: 2rem auto;
-  padding: 0 1rem;
+  margin: 0 auto 3rem;
+  padding: 1rem 1rem 1rem;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 2rem;
+  gap: 1.8rem;
 }
 
+/* Responsividade para smartphones - 2 colunas lado a lado */
+@media (max-width: 600px) {
+  body {
+    padding-top: 100px;
+  }
+  header {
+    padding: 1rem 1rem;
+    min-height: auto;
+  }
+  .container {
+    grid-template-columns: repeat(2, 1fr);
+    padding: 1rem 0.5rem 1rem;
+    gap: 1rem;
+    margin: 1rem auto 2rem;
+  }
+  
+  /* Ajuste no header-texts para quebra natural */
+  .header-texts {
+    max-width: 100%;
+  }
+  header h1,
+  header p {
+    white-space: normal;
+    overflow-wrap: break-word;
+  }
+
+  /* Cards menores no mobile */
+  .card {
+    max-width: 100%;
+    border-radius: 10px;
+  }
+
+  .card img {
+    height: 160px;
+    border-bottom: 1.5px solid #bfa05a;
+  }
+
+  .card-content h2 {
+    font-size: 1.1rem;
+  }
+
+  .card-content p.description {
+    font-size: 0.85rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .btn-volume {
+    padding: 0.4rem 0;
+    font-size: 0.85rem;
+  }
+
+  .btn-add {
+    margin-top: 0.6rem;
+    padding: 0.45rem 0;
+    font-size: 0.9rem;
+  }
+}
+
+/* Card do perfume */
 .card {
   background: #1f1e1e;
   border-radius: 12px;
   box-shadow:
-    0 0 15px rgba(191, 160, 90, 0.4),
-    inset 0 0 10px #d4c06d;
+    0 0 18px rgba(191, 160, 90, 0.5),
+    inset 0 0 14px #d4c06d;
   overflow: hidden;
   display: flex;
   flex-direction: column;
   transition: transform 0.3s ease;
+  cursor: default;
 }
 .card:hover {
-  transform: translateY(-10px) scale(1.02);
+  transform: translateY(-8px) scale(1.02);
   box-shadow:
-    0 10px 30px rgba(191, 160, 90, 0.8),
-    inset 0 0 15px #d4c06d;
+    0 12px 35px rgba(191, 160, 90, 0.85),
+    inset 0 0 18px #d4c06d;
 }
 
+/* Imagem do perfume */
 .card img {
   width: 100%;
-  height: 250px;
-  object-fit: contain; /* para manter toda a imagem visível */
+  height: 200px;
+  object-fit: contain;
   display: block;
-  margin: auto; /* centraliza horizontalmente */
-  background-color: #1f1e1e; /* opcional, para o fundo do espaço da imagem */
+  margin: auto;
+  background-color: #1f1e1e;
+  border-bottom: 2px solid #bfa05a;
 }
 
+/* Conteúdo do card */
 .card-content {
-  padding: 1rem;
+  padding: 1rem 1.2rem 1.2rem;
   flex-grow: 1;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 }
 
+/* Nome do perfume */
 .card-content h2 {
   font-family: 'Playfair Display', serif;
-  font-size: 1.5rem;
-  margin: 0 0 0.5rem 0;
+  font-size: 1.4rem;
+  margin: 0 0 0.4rem 0;
   color: #d4c06d;
   letter-spacing: 0.05em;
 }
 
+/* Descrição */
 .card-content p.description {
   font-size: 0.95rem;
-  line-height: 1.3;
+  line-height: 1.4;
   color: #ccc8b8;
   flex-grow: 1;
+  margin-bottom: 0.8rem;
 }
 
-.prices {
-  margin-top: 1rem;
-  background: rgba(191, 160, 90, 0.1);
-  border-radius: 8px;
-  padding: 0.75rem;
-  box-shadow: inset 0 0 5px #bfa05a;
-}
-
-.prices p {
-  margin: 0.2rem 0;
-  font-weight: 600;
-  font-family: 'Montserrat', sans-serif;
-  font-size: 1rem;
-  color: #f0e6c8;
-}
-
-footer {
-  margin-top: 3rem;
-  padding: 1rem 0;
-  text-align: center;
-  font-size: 0.9rem;
-  color: #a69f77;
-}
+/* Botões de volume */
 .volume-buttons {
   margin-top: 1rem;
   display: flex;
@@ -124,6 +250,8 @@ footer {
   transition: background-color 0.3s, color 0.3s;
   font-family: 'Montserrat', sans-serif;
   user-select: none;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
 }
 
 .btn-volume:hover {
@@ -135,4 +263,117 @@ footer {
   background-color: #d4c06d;
   color: #1c1b1b;
   pointer-events: none;
+}
+
+/* Exibição do preço */
+.price-display {
+  margin-top: 0.9rem;
+  font-weight: 600;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1rem;
+  color: #f0e6c8;
+  text-align: center;
+}
+
+/* Botão Adicionar */
+.btn-add {
+  margin-top: 1.1rem;
+  padding: 0.55rem 0;
+  width: 100%;
+  background: transparent;
+  border: 2px solid #d4c06d;
+  border-radius: 8px;
+  color: #d4c06d;
+  font-weight: 700;
+  font-family: 'Montserrat', sans-serif;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+  user-select: none;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.btn-add:hover {
+  background-color: #d4c06d;
+  color: #1c1b1b;
+}
+
+/* Rodapé */
+footer {
+  margin-top: 3rem;
+  padding: 1rem 0;
+  text-align: center;
+  font-size: 0.9rem;
+  color: #a69f77;
+}
+
+/* Modal do carrinho */
+#cart-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(4px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 150;
+}
+
+.cart-modal-content {
+  background: #222;
+  border-radius: 10px;
+  padding: 1.5rem 2rem;
+  width: 90%;
+  max-width: 480px;
+  box-shadow: 0 0 20px #bfa05a;
+  color: #f5f5f7;
+  position: relative;
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+#cart-modal h2 {
+  margin-top: 0;
+  margin-bottom: 1rem;
+  font-family: 'Playfair Display', serif;
+  font-size: 1.8rem;
+  color: #d4c06d;
+}
+
+#close-cart {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  background: transparent;
+  border: none;
+  font-size: 2.4rem;
+  color: #d4c06d;
+  cursor: pointer;
+  font-weight: bold;
+  line-height: 1;
+}
+
+#cart-items .cart-item {
+  margin-bottom: 1rem;
+  border-bottom: 1px solid #d4c06d;
+  padding-bottom: 0.6rem;
+}
+
+#cart-items .btn-remove {
+  margin-top: 0.4rem;
+  background: transparent;
+  border: 1.5px solid #d45f5f;
+  border-radius: 6px;
+  padding: 0.3rem 0.6rem;
+  color: #d45f5f;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+  user-select: none;
+}
+
+#cart-items .btn-remove:hover {
+  background-color: #d45f5f;
+  color: #1c1b1b;
 }

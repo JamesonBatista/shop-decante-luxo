@@ -1,94 +1,226 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Sephora Decant - Luxo em Perfumes</title>
   <link rel="stylesheet" href="styles.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&family=Montserrat&display=swap"
-    rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&family=Montserrat&display=swap" rel="stylesheet" />
 </head>
-
 <body>
-  <header>
+<header>
+  <div class="header-texts">
     <h1>Sephora Decant</h1>
     <p>Decantes de perfumes caros com elegância e luxo</p>
-  </header>
+  </div>
+
+  <div id="cart-icon" title="Ver carrinho" aria-label="Abrir carrinho">
+    <!-- SVG do carrinho -->
+    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+      <path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zm10 0c-1.1 0-1.99.9-1.99 2S15.9 22 17 22s2-.9 2-2-.9-2-2-2zM7.16 14l1.25-2.5h7.98c.62 0 1.1-.48 1.1-1.1 0-.04-.02-.07-.02-.11L16.11 7H6l-.14-.29-1-2.01H1v2h2l3.6 7.59-1.35 2.44C4.17 17.05 4 17.48 4 18c0 1.1.9 2 2 2h12v-2H7.42c-.07-.19-.17-.37-.26-.57z"></path>
+    </svg>
+    <div id="cart-count" style="display:none">0</div>
+  </div>
+</header>
 
   <main class="container" id="perfumes-container">
     <!-- Cards serão inseridos aqui via JS -->
   </main>
 
-  <footer>
-    &copy; 2025 Sephora Decant. Luxo, exclusividade e sofisticação.
-  </footer>
-
-<script>
-  const container = document.getElementById('perfumes-container');
-
-  function createCard(perfume) {
-    const card = document.createElement('div');
-    card.classList.add('card');
-
-    card.innerHTML = `
-      <img src="${perfume.image}" alt="${perfume.name}">
-      <div class="card-content">
-        <h2>${perfume.name}</h2>
-        <p class="description">${perfume.description}</p>
-
-        <div class="volume-buttons">
-          <button class="btn-volume active" data-volume="2ml">2ml</button>
-          <button class="btn-volume" data-volume="5ml">5ml</button>
-          <button class="btn-volume" data-volume="10ml">10ml</button>
-        </div>
-
-        <div class="price-display">
-          <p>Preço: R$ <span class="price-value">${perfume.value.value2ml}</span></p>
-        </div>
+  <!-- Modal simples para detalhes do pedido -->
+  <div id="cart-modal" aria-hidden="true" style="display:none">
+    <div class="cart-modal-content" role="dialog" aria-modal="true" aria-labelledby="cart-modal-title">
+      <h2 id="cart-modal-title">Seu Pedido</h2>
+      <button id="close-cart" aria-label="Fechar detalhes do pedido">×</button>
+      <div id="cart-items">
+        <!-- Itens do carrinho aparecem aqui -->
       </div>
-    `;
+      <div id="cart-total" style="margin-top:1rem; font-weight:700; color:#d4c06d;"></div>
+    </div>
+  </div>
 
-    const btns = card.querySelectorAll('.btn-volume');
-    const priceValue = card.querySelector('.price-value');
+  <script>
+    const container = document.getElementById('perfumes-container');
+    const cartIcon = document.getElementById('cart-icon');
+    const cartCountEl = document.getElementById('cart-count');
+    const cartModal = document.getElementById('cart-modal');
+    const closeCartBtn = document.getElementById('close-cart');
+    const cartItemsEl = document.getElementById('cart-items');
+    const cartTotalEl = document.getElementById('cart-total');
 
-    btns.forEach(btn => {
-      btn.addEventListener('click', () => {
-        btns.forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
+    // Carrinho interno (array de objetos com perfume, volume, quantidade)
+    let cart = [];
 
-        const vol = btn.getAttribute('data-volume');
-        if (vol === '2ml') priceValue.textContent = perfume.value.value2ml;
-        else if (vol === '5ml') priceValue.textContent = perfume.value.value5ml;
-        else if (vol === '10ml') priceValue.textContent = perfume.value.value10ml;
+    function createCard(perfume) {
+      const card = document.createElement('div');
+      card.classList.add('card');
+
+      card.innerHTML = `
+        <img src="${perfume.image}" alt="${perfume.name}">
+        <div class="card-content">
+          <h2>${perfume.name}</h2>
+          <p class="description">${perfume.description}</p>
+
+          <div class="volume-buttons">
+            <button class="btn-volume active" data-volume="2ml">2ml</button>
+            <button class="btn-volume" data-volume="5ml">5ml</button>
+            <button class="btn-volume" data-volume="10ml">10ml</button>
+          </div>
+
+          <div class="price-display">
+            <p>Preço: R$ <span class="price-value">${perfume.value.value2ml}</span></p>
+          </div>
+          
+          <button class="btn-add">Adicionar</button>
+        </div>
+      `;
+
+      const btns = card.querySelectorAll('.btn-volume');
+      const priceValue = card.querySelector('.price-value');
+      const addBtn = card.querySelector('.btn-add');
+
+      let selectedVolume = '2ml'; // padrão
+
+      btns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          btns.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+
+          selectedVolume = btn.getAttribute('data-volume');
+
+          if (selectedVolume === '2ml') priceValue.textContent = perfume.value.value2ml;
+          else if (selectedVolume === '5ml') priceValue.textContent = perfume.value.value5ml;
+          else if (selectedVolume === '10ml') priceValue.textContent = perfume.value.value10ml;
+        });
       });
+
+      addBtn.addEventListener('click', () => {
+        addToCart(perfume, selectedVolume);
+      });
+
+      return card;
+    }
+
+    function addToCart(perfume, volume) {
+      // Verifica se já existe esse perfume com esse volume no carrinho
+      const itemIndex = cart.findIndex(item => item.perfume.name === perfume.name && item.volume === volume);
+      
+      if (itemIndex > -1) {
+        // Incrementa quantidade
+        cart[itemIndex].quantity++;
+      } else {
+        // Adiciona novo item
+        cart.push({ perfume, volume, quantity: 1 });
+      }
+      updateCartCount();
+    }
+
+    function updateCartCount() {
+      const totalItems = cart.reduce((acc, item) => acc + item.quantity, 0);
+      if (totalItems > 0) {
+        cartCountEl.style.display = 'flex';
+        cartCountEl.textContent = totalItems;
+      } else {
+        cartCountEl.style.display = 'none';
+      }
+    }
+
+    function openCart() {
+      renderCartItems();
+      cartModal.style.display = 'block';
+      cartModal.setAttribute('aria-hidden', 'false');
+    }
+
+    function closeCart() {
+      cartModal.style.display = 'none';
+      cartModal.setAttribute('aria-hidden', 'true');
+    }
+
+    function renderCartItems() {
+      if (cart.length === 0) {
+        cartItemsEl.innerHTML = '<p>Seu carrinho está vazio.</p>';
+        cartTotalEl.textContent = '';
+        return;
+      }
+
+      const lines = cart.map((item, index) => {
+        const price = item.volume === '2ml' ? item.perfume.value.value2ml :
+                      item.volume === '5ml' ? item.perfume.value.value5ml :
+                      item.perfume.value.value10ml;
+        const subtotal = price * item.quantity;
+
+        return `
+          <div class="cart-item" data-index="${index}" style="border-bottom: 1px solid #d4c06d; padding: 0.5rem 0;">
+            <strong>${item.perfume.name}</strong> (${item.volume})<br/>
+            Quantidade: ${item.quantity}<br/>
+            Preço unitário: R$ ${price}<br/>
+            Subtotal: R$ ${subtotal}<br/>
+            <button class="btn-remove" aria-label="Remover um item">Remover 1</button>
+          </div>
+        `;
+      }).join('');
+
+      cartItemsEl.innerHTML = lines;
+
+      // Soma total
+      const total = cart.reduce((acc, item) => {
+        const price = item.volume === '2ml' ? item.perfume.value.value2ml :
+                      item.volume === '5ml' ? item.perfume.value.value5ml :
+                      item.perfume.value.value10ml;
+        return acc + price * item.quantity;
+      }, 0);
+      cartTotalEl.textContent = `Total: R$ ${total}`;
+
+      // Adiciona evento para remover item
+      const removeButtons = cartItemsEl.querySelectorAll('.btn-remove');
+      removeButtons.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          const idx = e.target.closest('.cart-item').getAttribute('data-index');
+          removeOneFromCart(parseInt(idx, 10));
+        });
+      });
+    }
+
+    function removeOneFromCart(index) {
+      if (cart[index].quantity > 1) {
+        cart[index].quantity--;
+      } else {
+        cart.splice(index, 1);
+      }
+      updateCartCount();
+      renderCartItems();
+    }
+
+    function loadPerfumes() {
+      fetch('data.json')
+        .then(response => {
+          if (!response.ok) {
+            throw new Error(`Erro ao carregar data.json: ${response.statusText}`);
+          }
+          return response.json();
+        })
+        .then(perfumesData => {
+          perfumesData.forEach(perfume => {
+            const card = createCard(perfume);
+            container.appendChild(card);
+          });
+        })
+        .catch(error => {
+          container.innerHTML = `<p style="color: #f00; text-align: center;">${error.message}</p>`;
+        });
+    }
+
+    // Eventos dos ícones
+    cartIcon.addEventListener('click', openCart);
+    closeCartBtn.addEventListener('click', closeCart);
+
+    // Fechar modal clicando fora do conteúdo
+    cartModal.addEventListener('click', (e) => {
+      if (e.target === cartModal) closeCart();
     });
 
-    return card;
-  }
-
-  function loadPerfumes() {
-    fetch('data.json')
-      .then(response => {
-        if (!response.ok) {
-          throw new Error(`Erro ao carregar data.json: ${response.statusText}`);
-        }
-        return response.json();
-      })
-      .then(perfumesData => {
-        perfumesData.forEach(perfume => {
-          const card = createCard(perfume);
-          container.appendChild(card);
-        });
-      })
-      .catch(error => {
-        container.innerHTML = `<p style="color: #f00; text-align: center;">${error.message}</p>`;
-      });
-  }
-
-  loadPerfumes();
-</script>
-
+    loadPerfumes();
+    updateCartCount();
+  </script>
 </body>
-
 </html>
