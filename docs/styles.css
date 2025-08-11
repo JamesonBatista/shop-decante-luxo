@@ -125,7 +125,7 @@ header p {
   }
   .container {
     grid-template-columns: repeat(2, 1fr);
-    padding: 8rem 0.5rem 1rem;
+    padding: 10rem 0.5rem 1rem;
     gap: 1rem;
     margin: 1rem auto 2rem;
   }
