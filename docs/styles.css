@@ -1,31 +1,31 @@
 /* Reset básico e corpo */
 body {
   margin: 0;
+  padding-top: 130px; /* garantir afastamento do header fixo */
   background: linear-gradient(135deg, #2b2a2a, #1c1b1b);
   font-family: 'Montserrat', sans-serif;
   color: #f5f5f7;
   min-height: 100vh;
-  padding-top: 110px; /* espaço para header fixo alto com subtítulo */
   box-sizing: border-box;
 }
 
-/* Header fixo com layout horizontal */
 header {
   position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
+  top: 0; left: 0; right: 0;
   background: linear-gradient(45deg, #bfa05a, #6f592a);
   box-shadow: 0 4px 10px rgba(191, 160, 90, 0.7);
   padding: 1rem 2rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  flex-wrap: nowrap;
+  flex-wrap: wrap; /* permite subtítulo na linha de baixo */
   gap: 1.5rem;
   z-index: 1000;
-  min-height: 80px;
+  min-height: 100px; /* espaço para título + subtítulo */
 }
+
+/* restante do seu CSS permanece igual... */
+
 
 /* Container vertical para título + subtítulo */
 .header-texts {
@@ -125,7 +125,7 @@ header p {
   }
   .container {
     grid-template-columns: repeat(2, 1fr);
-    padding: 1rem 0.5rem 1rem;
+    padding: 8rem 0.5rem 1rem;
     gap: 1rem;
     margin: 1rem auto 2rem;
   }
