@@ -1,7 +1,8 @@
 /* Reset básico e corpo */
 body {
   margin: 0;
-  padding-top: 130px; /* garantir afastamento do header fixo */
+  padding-top: 130px;
+  /* garantir afastamento do header fixo */
   background: linear-gradient(135deg, #2b2a2a, #1c1b1b);
   font-family: 'Montserrat', sans-serif;
   color: #f5f5f7;
@@ -11,14 +12,17 @@ body {
 
 header {
   position: fixed;
-  top: 0; left: 0; right: 0;
+  top: 0;
+  left: 0;
+  right: 0;
   background: linear-gradient(45deg, #bfa05a, #6f592a);
   box-shadow: 0 4px 10px rgba(191, 160, 90, 0.7);
   padding: 1rem 2rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  flex-wrap: wrap; /* permite subtítulo na linha de baixo */
+  flex-wrap: wrap;
+  /* permite subtítulo na linha de baixo */
   gap: 1.5rem;
   z-index: 1000;
 }
@@ -31,24 +35,53 @@ header {
   display: flex;
   flex-direction: column;
   flex-grow: 1;
-  min-width: 0; /* evita overflow */
-  max-width: calc(100% - 60px); /* espaço para ícone do carrinho */
-  white-space: normal; /* para permitir quebra */
+  min-width: 0;
+  /* evita overflow */
+  max-width: calc(100% - 60px);
+  /* espaço para ícone do carrinho */
+  white-space: normal;
+  /* para permitir quebra */
 }
 
-/* Título do site */
 header h1 {
   font-family: 'Playfair Display', serif;
-  font-weight: 700;
+  font-weight: 900;
   font-size: 2.4rem;
+  /* color fallback para quando o efeito não funcionar */
   color: #f0e6c8;
   text-transform: uppercase;
   letter-spacing: 0.15em;
   margin: 0;
-  text-shadow: 0 0 8px #d4c06d;
   line-height: 1.1;
   overflow-wrap: break-word;
+
+  /* Efeito luminoso animado */
+  background: linear-gradient(90deg,
+      #f0e6c8 0%,
+      #fffacd 20%,
+      #f0e6c8 40%,
+      #f0e6c8 100%);
+  background-size: 200% 100%;
+  background-clip: text;
+  -webkit-background-clip: text;
+  /* importante para Safari/Chrome */
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  /* importante para Safari/Chrome */
+  animation: shine 3s linear infinite;
 }
+
+@keyframes shine {
+  0% {
+    background-position: 200% 0;
+  }
+
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+
 
 /* Subtítulo do site */
 header p {
@@ -95,7 +128,8 @@ header p {
   border-radius: 50%;
   width: 18px;
   height: 18px;
-  display: none; /* inicia oculto */
+  display: none;
+  /* inicia oculto */
   justify-content: center;
   align-items: center;
   box-shadow: 0 0 6px #bfa05a;
@@ -118,21 +152,24 @@ header p {
   body {
     padding-top: 100px;
   }
+
   header {
     padding: 1rem 1rem;
     min-height: auto;
   }
+
   .container {
     grid-template-columns: repeat(2, 1fr);
-    padding: 8rem 0.5rem 1rem;
+    padding: 5rem 0.5rem 1rem;
     gap: 1rem;
     margin: 1rem auto 2rem;
   }
-  
+
   /* Ajuste no header-texts para quebra natural */
   .header-texts {
     max-width: 100%;
   }
+
   header h1,
   header p {
     white-space: normal;
@@ -184,6 +221,7 @@ header p {
   transition: transform 0.3s ease;
   cursor: default;
 }
+
 .card:hover {
   transform: translateY(-8px) scale(1.02);
   box-shadow:
