@@ -312,14 +312,56 @@ header p {
   color: #1c1b1b;
 }
 
-/* Rodapé */
+/* Estilos do Footer */
+/* Estilos do Footer */
 footer {
-  margin-top: 3rem;
-  padding: 1rem 0;
-  text-align: center;
-  font-size: 0.9rem;
-  color: #a69f77;
+    background-color: #111;
+    color: #fff;
+    text-align: center;
+    padding: 20px;
+    position: fixed;  /* Fixa o footer na parte inferior */
+    bottom: 0;        /* Coloca o footer na parte inferior da tela */
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    z-index: 999;     /* Garante que o footer esteja acima de outros conteúdos */
 }
+
+footer .footer-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+footer p {
+    margin-top: 10px;
+    font-size: 0.9rem;
+}
+
+/* Ícone do WhatsApp */
+.whatsapp-icon {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: #25d366;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 12px;
+    transition: background-color 0.3s;
+}
+
+.whatsapp-icon:hover {
+    background-color: #128c7e;
+}
+
+.whatsapp-icon img {
+    width: 30px;
+    height: 30px;
+}
+
 
 /* Modal do carrinho */
 #cart-modal {

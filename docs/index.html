@@ -6,8 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Parfum d'Or - Luxo em Perfumes</title>
   <link rel="stylesheet" href="styles.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&family=Montserrat&display=swap"
-    rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&family=Montserrat&display=swap" rel="stylesheet" />
 </head>
 
 <body>
@@ -50,6 +49,15 @@
   <main class="container" id="perfumes-container">
     <!-- Cards serão inseridos aqui via JS -->
   </main>
+
+  <footer>
+    <div class="footer-content">
+      <a href="https://wa.me/5551999999999" target="_blank" id="whatsapp-icon" aria-label="Fale conosco pelo WhatsApp">
+        <img src="https://img.freepik.com/vetores-premium/whatsapp-vector-logo-icon-logotipo-vector-midia-social_901408-406.jpg?semt=ais_hybrid&w=740&q=80" alt="WhatsApp" class="whatsapp-icon">
+      </a>
+      <p>&copy; 2025 Parfum d'Or</p>
+    </div>
+  </footer>
 
   <script>
     // Elementos DOM
@@ -129,8 +137,6 @@
 
       return card;
     }
-
-
 
     // Adiciona item no carrinho (incrementa se já existe)
     function addToCart(perfume, volume) {
