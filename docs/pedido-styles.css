@@ -129,7 +129,7 @@
 	color: #d4c06d;
 	font-weight: 700;
 	cursor: pointer;
-	padding: 0 0.4rem;
+	padding: 6px 1rem;
 	margin: 0 0.2rem;
 	user-select: none;
 	transition: background-color 0.3s, color 0.3s;
