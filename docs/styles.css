@@ -1,14 +1,16 @@
 /* Reset básico e corpo */
-body {
+body, html {
   margin: 0;
-  padding-top: 130px; /* garantir afastamento do header fixo */
+  padding: 0;
   background: linear-gradient(135deg, #2b2a2a, #1c1b1b);
   font-family: 'Montserrat', sans-serif;
   color: #f5f5f7;
   min-height: 100vh;
   box-sizing: border-box;
+  overflow-x: hidden; /* Impede scroll horizontal */
 }
 
+/* Header fixo com duas partes */
 header {
   position: fixed;
   top: 0;
@@ -18,20 +20,20 @@ header {
   box-shadow: 0 4px 10px rgba(191, 160, 90, 0.7);
   padding: 1rem 2rem;
   display: flex;
-  justify-content: space-between;
+  flex-direction: column; /* Duas partes: uma no topo e outra na parte inferior */
+  justify-content: center;
   align-items: center;
-  flex-wrap: wrap;
-  gap: 1.5rem;
+  gap: 1rem;
   z-index: 1000;
+  width: 100%;
+  box-sizing: border-box;
 }
 
-/* Container vertical para título + subtítulo */
+/* Bloco superior: título e subtítulo */
 .header-texts {
   display: flex;
   flex-direction: column;
-  flex-grow: 1;
-  min-width: 0;
-  max-width: calc(100% - 60px); /* espaço para ícone do carrinho */
+  align-items: center; /* Centra o texto */
   white-space: normal;
 }
 
@@ -42,9 +44,9 @@ header h1 {
   letter-spacing: 0.15em;
   margin: 0;
   line-height: 1.1;
+  text-align: center;
 }
 
-/* Subtítulo do site */
 header p {
   margin: 4px 0 0;
   font-family: 'Montserrat', sans-serif;
@@ -52,14 +54,55 @@ header p {
   color: #f0e6c8cc;
   letter-spacing: 0.03em;
   overflow-wrap: break-word;
+  text-align: center;
+}
+
+.navicons {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  max-width: 1200px;
+  /* Mantém o posicionamento fixo no header */
+}
+
+/* Menu */
+nav {
+  display: flex;
+  gap: 1rem;
+}
+
+#menu-list {
+  display: flex;
+  gap: 1rem;
+  list-style: none;
+  margin: 40px;
+  padding: 0;
+}
+
+#menu-list li {
+  text-align: center;
+}
+
+#menu-list a {
+  color: #f0e6c8;
+  text-decoration: none;
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+#menu-list a:hover {
+  color: #bfa05a;
 }
 
 /* Ícone do carrinho com contador */
 #cart-icon {
   position: relative;
   cursor: pointer;
-  width: 36px;
-  height: 36px;
+  width: 36px;  /* Tamanho fixo do ícone */
+  height: 36px;  /* Tamanho fixo do ícone */
   flex-shrink: 0;
   display: flex;
   align-items: center;
@@ -67,15 +110,15 @@ header p {
 }
 
 #cart-icon svg {
-  width: 24px;
-  height: 24px;
+  width: 24px;  /* Tamanho do SVG */
+  height: 24px;  /* Tamanho do SVG */
   fill: #d4c06d;
   filter: drop-shadow(0 0 2px #bfa05a);
   transition: transform 0.3s ease;
 }
 
 #cart-icon:hover svg {
-  transform: scale(1.2);
+  transform: scale(1.2);  /* Efeito de zoom ao passar o mouse */
 }
 
 #cart-count {
@@ -89,7 +132,7 @@ header p {
   border-radius: 50%;
   width: 18px;
   height: 18px;
-  display: none;
+  display: none;  /* Contador começa invisível */
   justify-content: center;
   align-items: center;
   box-shadow: 0 0 6px #bfa05a;
@@ -97,26 +140,47 @@ header p {
   pointer-events: none;
 }
 
+/* Responsividade */
+@media (max-width: 600px) {
+  header {
+    padding: 1rem;
+  }
+
+  .header-texts {
+    max-width: 100%;
+    text-align: center;
+  }
+
+
+
+  #menu-list {
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-top: 1rem;
+  }
+
+  #menu-list li {
+    width: 100%;
+    text-align: center;
+  }
+}
+
 /* Container dos cards */
 .container {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 1rem 1rem 3rem; /* Espaçamento inferior maior para não sobrepor o footer */
+  padding: 1rem 1rem 3rem;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 1.8rem;
   margin-bottom: 80px; /* Garante que o conteúdo não fique por baixo do footer */
+  width: 100%;
+  box-sizing: border-box;
 }
 
-/* Responsividade para smartphones - 2 colunas lado a lado */
 @media (max-width: 600px) {
   body {
     padding-top: 100px;
-  }
-
-  header {
-    padding: 1rem 1rem;
-    min-height: auto;
   }
 
   .container {
@@ -171,9 +235,7 @@ header p {
 .card {
   background: #1f1e1e;
   border-radius: 12px;
-  box-shadow:
-    0 0 18px rgba(191, 160, 90, 0.5),
-    inset 0 0 14px #d4c06d;
+  box-shadow: 0 0 18px rgba(191, 160, 90, 0.5), inset 0 0 14px #d4c06d;
   overflow: hidden;
   display: flex;
   flex-direction: column;
@@ -183,12 +245,9 @@ header p {
 
 .card:hover {
   transform: translateY(-8px) scale(1.02);
-  box-shadow:
-    0 12px 35px rgba(191, 160, 90, 0.85),
-    inset 0 0 18px #d4c06d;
+  box-shadow: 0 12px 35px rgba(191, 160, 90, 0.85), inset 0 0 18px #d4c06d;
 }
 
-/* Imagem do perfume */
 .card img {
   width: 100%;
   height: 200px;
@@ -199,7 +258,6 @@ header p {
   border-bottom: 2px solid #bfa05a;
 }
 
-/* Conteúdo do card */
 .card-content {
   padding: 1rem 1.2rem 1.2rem;
   flex-grow: 1;
@@ -209,7 +267,6 @@ header p {
   justify-content: space-between;
 }
 
-/* Nome do perfume */
 .card-content h2 {
   font-family: 'Playfair Display', serif;
   font-size: 1rem;
@@ -218,7 +275,6 @@ header p {
   letter-spacing: 0.05em;
 }
 
-/* Descrição */
 .card-content p.description {
   font-size: 0.95rem;
   line-height: 1.4;
@@ -227,7 +283,6 @@ header p {
   margin-bottom: 0.8rem;
 }
 
-/* Botões de volume */
 .volume-buttons {
   margin-top: 1rem;
   display: flex;
@@ -262,7 +317,6 @@ header p {
   pointer-events: none;
 }
 
-/* Exibição do preço */
 .price-display {
   margin-top: 0.9rem;
   font-weight: 600;
@@ -272,7 +326,6 @@ header p {
   text-align: center;
 }
 
-/* Botão Adicionar */
 .btn-add {
   margin-top: 1.1rem;
   padding: 0.55rem 0;
@@ -297,51 +350,50 @@ header p {
 
 /* Estilos do Footer */
 footer {
-    background-color: #111;
-    color: #fff;
-    text-align: center;
-    padding: 20px;
-    position: sticky;
-    bottom: 0;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    z-index: 999; /* Garante que o footer esteja acima de outros conteúdos */
+  background-color: #111;
+  color: #fff;
+  text-align: center;
+  padding: 20px;
+  position: sticky;
+  bottom: 0;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  z-index: 999; /* Garante que o footer esteja acima de outros conteúdos */
 }
 
 footer .footer-content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 footer p {
-    margin-top: 10px;
-    font-size: 0.9rem;
+  margin-top: 10px;
+  font-size: 0.9rem;
 }
 
-/* Ícone do WhatsApp */
 .whatsapp-icon {
-    width:20px;
-    height: 20px;
-    border-radius: 50%;
-    background-color: #25d366;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 12px;
-    transition: background-color 0.3s;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: #25d366;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 12px;
+  transition: background-color 0.3s;
 }
 
 .whatsapp-icon:hover {
-    background-color: #128c7e;
+  background-color: #128c7e;
 }
 
 .whatsapp-icon img {
-    width: 30px;
-    height: 30px;
+  width: 30px;
+  height: 30px;
 }
 
 /* Modal do carrinho */
@@ -413,4 +465,71 @@ footer p {
 #cart-items .btn-remove:hover {
   background-color: #d45f5f;
   color: #1c1b1b;
+}
+
+#hamburger-btn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.3s ease;
+  flex-shrink: 0;
+}
+
+#hamburger-btn:hover {
+  transform: scale(1.1);
+}
+
+.menu-list {
+  position: absolute;
+  top: 70px;
+  right: 8.5rem;
+  background: #1f1e1e;
+  border: 2px solid #d4c06d;
+  border-radius: 10px;
+  list-style: none;
+  padding: 0.5rem 1rem;
+  box-shadow: 0 0 10px #bfa05a;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  min-width: 160px;
+  z-index: 1100;
+}
+
+.menu-list[hidden] {
+  display: none !important;
+}
+
+.menu-list a {
+  color: #d4c06d;
+  text-decoration: none;
+  font-weight: 600;
+  font-family: 'Montserrat', sans-serif;
+  padding: 0.4rem 0.2rem;
+  transition: background-color 0.25s, color 0.25s;
+  border-radius: 6px;
+  display: block;
+}
+#menu-list a {
+  font-size: 12px;;
+}
+
+.menu-list a:hover {
+  background-color: #d4c06d;
+  color: #1c1b1b;
+}
+
+/* Responsividade: esconder menu no desktop (opcional), mostrar hamburger */
+@media (min-width: 900px) {
+  #hamburger-btn {
+    display: none;
+  }
+
+  .menu-list {
+    display: none !important;
+  }
 }
