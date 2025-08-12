@@ -1,15 +1,73 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Detalhes da Compra</title>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<title>Detalhes do Produto - Parfum d'Or</title>
+
+	<!-- CSS limpo e claro -->
+	<link rel="stylesheet" href="styles.css" />
+
+	<!-- Fontes Google -->
+	<link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet" />
 </head>
+
 <body>
-    <h1>Detalhes da Compra</h1>
-    <p>Itens adicionados ao carrinho:</p>
-    <ul id="itens-carrinho">
-        <!-- Lista de produtos adicionados será exibida aqui -->
-    </ul>
+
+	<header>
+		<h1>Parfum d'Or</h1>
+		<a href="../index.html" class="back-link" aria-label="Voltar para a lista de perfumes">← Voltar</a>
+	</header>
+
+	<main id="product-details" class="container">
+		<p>Carregando detalhes do produto...</p>
+	</main>
+
+	<script>
+		// Helper para obter parâmetro da URL
+		function getQueryParam(param) {
+			const params = new URLSearchParams(window.location.search);
+			return params.get(param);
+		}
+
+		const productSlug = getQueryParam('product');
+
+		fetch('../data.json')
+			.then(res => {
+				if (!res.ok) throw new Error('Erro ao carregar os dados.');
+				return res.json();
+			})
+			.then(data => {
+				const perfumes = data.perfumes || [];
+				const product = perfumes.find(p => {
+					const slug = p.id || p.name.toLowerCase().replace(/\s+/g, '-');
+					return slug === productSlug;
+				});
+
+				const container = document.getElementById('product-details');
+
+				if (!product) {
+					container.innerHTML = '<p>Produto não encontrado.</p>';
+					return;
+				}
+
+				// Usa detalhes.description se existir e não vazio, senão description
+				const descricao = product.detalhes && product.detalhes.description.trim() !== ''
+					? product.detalhes.description
+					: product.description;
+
+				container.innerHTML = `
+          <h2 class="product-name">${product.name}</h2>
+          <p class="product-description">${descricao || 'Descrição não disponível.'}</p>
+        `;
+			})
+			.catch(err => {
+				const container = document.getElementById('product-details');
+				container.innerHTML = `<p class="error">${err.message}</p>`;
+			});
+	</script>
+
 </body>
+
 </html>

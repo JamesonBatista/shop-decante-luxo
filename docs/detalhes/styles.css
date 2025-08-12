@@ -1,0 +1,77 @@
+/* Reset e básico */
+* {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	font-family: 'Montserrat', sans-serif;
+	background-color: #fff;
+	color: #222;
+	line-height: 1.6;
+	padding: 1.5rem;
+	min-height: 100vh;
+}
+
+/* Header limpo */
+header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: 2rem;
+}
+
+header h1 {
+	font-weight: 700;
+	font-size: 1.8rem;
+	color: #111;
+	user-select: none;
+}
+
+.back-link {
+	font-size: 1rem;
+	color: #007bff;
+	text-decoration: none;
+	font-weight: 600;
+	padding: 0.25rem 0.5rem;
+	border-radius: 5px;
+	transition: background-color 0.3s;
+}
+
+.back-link:hover,
+.back-link:focus {
+	background-color: #007bff;
+	color: white;
+	outline: none;
+}
+
+/* Conteúdo da página */
+.container {
+	max-width: 600px;
+	margin: 0 auto;
+}
+
+/* Nome do produto */
+.product-name {
+	font-size: 2rem;
+	font-weight: 700;
+	margin-bottom: 1rem;
+	color: #333;
+}
+
+/* Descrição */
+.product-description {
+	font-size: 1.1rem;
+	color: #555;
+	white-space: pre-line;
+	/* Para respeitar quebras de linha caso existam */
+}
+
+/* Mensagem de erro */
+.error {
+	color: #cc0000;
+	font-weight: 600;
+	font-size: 1.1rem;
+	text-align: center;
+}

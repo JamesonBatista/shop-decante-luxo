@@ -67,32 +67,47 @@
       const card = document.createElement('div');
       card.classList.add('card');
 
+      // Cria um id/slug para identificar o produto
+      const productId = perfume.id || perfume.name.replace(/\s+/g, '-').toLowerCase();
+      card.setAttribute('data-product-id', productId);
+
       card.innerHTML = `
-        <img src="${perfume.image}" alt="${perfume.name}">
-        <div class="card-content">
-          <h2>${perfume.name}</h2>
-          <div class="volume-buttons">
-            <button class="btn-volume active" data-volume="2ml">2ml</button>
-            <button class="btn-volume" data-volume="5ml">5ml</button>
-            <button class="btn-volume" data-volume="10ml">10ml</button>
-          </div>
-          <div class="price-display">
-            <p>Preço: R$ <span class="price-value">${perfume.value.value2ml}</span></p>
-          </div>
-          <button class="btn-add">Adicionar</button>
-        </div>
-      `;
+    <img src="${perfume.image}" alt="${perfume.name}">
+    <div class="card-content">
+      <h2>${perfume.name}</h2>
+      <div class="volume-buttons">
+        <button class="btn-volume" data-volume="2ml">2ml</button>
+        <button class="btn-volume" data-volume="5ml">5ml</button>
+        <button class="btn-volume" data-volume="10ml">10ml</button>
+      </div>
+      <div class="price-display">
+        <p>Preço: R$ <span class="price-value">${perfume.value.value2ml}</span></p>
+      </div>
+      <button class="btn-add">Adicionar</button>
+    </div>
+  `;
 
       const btns = card.querySelectorAll('.btn-volume');
       const priceValue = card.querySelector('.price-value');
       const addBtn = card.querySelector('.btn-add');
 
-      let selectedVolume = '2ml';
+      // Define volume padrão
+      let selectedVolume = '5ml';
 
+      // Marca como ativo o botão do volume padrão (2ml)
       btns.forEach(btn => {
-        btn.addEventListener('click', () => {
+        if (btn.getAttribute('data-volume') === selectedVolume) {
+          btn.classList.add('active');
+        }
+      });
+
+      // Atualiza preço quando mudar volume
+      btns.forEach(btn => {
+        btn.addEventListener('click', (event) => {
+          event.stopPropagation(); // evita que clique no botão dispare o clique no card
           btns.forEach(b => b.classList.remove('active'));
           btn.classList.add('active');
+
           selectedVolume = btn.getAttribute('data-volume');
 
           if (selectedVolume === '2ml') priceValue.textContent = perfume.value.value2ml;
@@ -101,12 +116,20 @@
         });
       });
 
-      addBtn.addEventListener('click', () => {
+      // Botão adicionar ao carrinho
+      addBtn.addEventListener('click', (event) => {
+        event.stopPropagation(); // evita que clique dispare o clique no card
         addToCart(perfume, selectedVolume);
+      });
+
+      // Clique no card redireciona para a página de detalhes (exceto nos botões)
+      card.addEventListener('click', () => {
+        window.location.href = `detalhes/index.html?product=${encodeURIComponent(productId)}`;
       });
 
       return card;
     }
+
 
     // Adiciona item no carrinho (incrementa se já existe)
     function addToCart(perfume, volume) {

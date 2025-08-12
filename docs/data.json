@@ -8,6 +8,9 @@
         "value2ml": 30,
         "value5ml": 60,
         "value10ml": 120
+      },
+      "detalhes": {
+        "description": "Testando"
       }
     },
     {
@@ -18,6 +21,9 @@
         "value2ml": 25,
         "value5ml": 50,
         "value10ml": 110
+      },
+         "detalhes": {
+        "description": "Testando Amber"
       }
     },
     {
