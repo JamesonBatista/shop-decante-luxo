@@ -353,7 +353,7 @@ footer {
   background-color: #111;
   color: #fff;
   text-align: center;
-  padding: 20px;
+  padding: 3px;
   position: sticky;
   bottom: 0;
   width: 100%;
@@ -477,6 +477,9 @@ footer p {
   justify-content: center;
   transition: transform 0.3s ease;
   flex-shrink: 0;
+}
+#hamburger-btn, .menu-list {
+  display: none !important;
 }
 
 #hamburger-btn:hover {
