@@ -4,14 +4,14 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>La Vie Est Belle Eau de Parfum</title>
+	<title>Parfum d'Or</title>
 	<link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
 
 	<header>
-		<h1>La Vie Est Belle Eau de Parfum</h1>
+		<h1>Parfum d'Or</h1>
 		<a href="../index.html" class="back-link" aria-label="Voltar para a lista de perfumes">← Voltar</a>
 	</header>
 
@@ -53,6 +53,7 @@
 					: product.description;
 
 				container.innerHTML = `
+                    <h2 class="product-name">${product.name}</h2>
                     <div class="product-info">
                         <p class="product-description">${descricao || 'Descrição não disponível.'}</p>
                     </div>

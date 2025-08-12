@@ -81,7 +81,7 @@
         <button class="btn-volume" data-volume="10ml">10ml</button>
       </div>
       <div class="price-display">
-        <p>Preço: R$ <span class="price-value">${perfume.value.value2ml}</span></p>
+        <p>Preço: R$ <span class="price-value">${perfume.value.value5ml}</span></p>
       </div>
       <button class="btn-add">Adicionar</button>
     </div>
@@ -91,10 +91,10 @@
       const priceValue = card.querySelector('.price-value');
       const addBtn = card.querySelector('.btn-add');
 
-      // Define volume padrão
+      // Define volume padrão como 5ml
       let selectedVolume = '5ml';
 
-      // Marca como ativo o botão do volume padrão (2ml)
+      // Marca como ativo o botão do volume padrão (5ml)
       btns.forEach(btn => {
         if (btn.getAttribute('data-volume') === selectedVolume) {
           btn.classList.add('active');
@@ -129,6 +129,7 @@
 
       return card;
     }
+
 
 
     // Adiciona item no carrinho (incrementa se já existe)
