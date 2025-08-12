@@ -1,22 +1,17 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 
 <head>
-	<meta charset="UTF-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1" />
-	<title>Detalhes do Produto - Parfum d'Or</title>
-
-	<!-- CSS limpo e claro -->
-	<link rel="stylesheet" href="styles.css" />
-
-	<!-- Fontes Google -->
-	<link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet" />
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>La Vie Est Belle Eau de Parfum</title>
+	<link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
 
 	<header>
-		<h1>Parfum d'Or</h1>
+		<h1>La Vie Est Belle Eau de Parfum</h1>
 		<a href="../index.html" class="back-link" aria-label="Voltar para a lista de perfumes">← Voltar</a>
 	</header>
 
@@ -58,13 +53,40 @@
 					: product.description;
 
 				container.innerHTML = `
-          <h2 class="product-name">${product.name}</h2>
-          <p class="product-description">${descricao || 'Descrição não disponível.'}</p>
-        `;
+                    <div class="product-info">
+                        <p class="product-description">${descricao || 'Descrição não disponível.'}</p>
+                    </div>
+
+                    <!-- Como Usar -->
+                    <section id="usos">
+                        <h3>Como Usar</h3>
+                        <ul>
+                            ${product.usos.map(uso => `<li>${uso}</li>`).join('')}
+                        </ul>
+                    </section>
+
+                    <!-- Ocasiões Perfeitas -->
+                    <section id="ocasioes">
+                        <h3>Ocasiões Perfeitas</h3>
+                        <ul>
+                            ${product.ocasioes.map(ocasião => `<li>${ocasião}</li>`).join('')}
+                        </ul>
+                    </section>
+
+                    <!-- Construção da Fragrância -->
+                    <section id="construcao">
+                        <h3>Construção da Fragrância</h3>
+                        <ul>
+                            <li><strong>Notas de Topo:</strong> ${product.construcao.topo}</li>
+                            <li><strong>Notas de Coração:</strong> ${product.construcao.coracao}</li>
+                            <li><strong>Notas de Fundo:</strong> ${product.construcao.fundo}</li>
+                        </ul>
+                    </section>
+                `;
 			})
 			.catch(err => {
 				const container = document.getElementById('product-details');
-				container.innerHTML = `<p class="error">${err.message}</p>`;
+				container.innerHTML = `<p class="error">Informação em breve...</p>`;
 			});
 	</script>
 
