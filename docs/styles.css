@@ -1,8 +1,7 @@
 /* Reset básico e corpo */
 body {
   margin: 0;
-  padding-top: 130px;
-  /* garantir afastamento do header fixo */
+  padding-top: 130px; /* garantir afastamento do header fixo */
   background: linear-gradient(135deg, #2b2a2a, #1c1b1b);
   font-family: 'Montserrat', sans-serif;
   color: #f5f5f7;
@@ -22,13 +21,9 @@ header {
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
-  /* permite subtítulo na linha de baixo */
   gap: 1.5rem;
   z-index: 1000;
 }
-
-/* restante do seu CSS permanece igual... */
-
 
 /* Container vertical para título + subtítulo */
 .header-texts {
@@ -36,27 +31,18 @@ header {
   flex-direction: column;
   flex-grow: 1;
   min-width: 0;
-  /* evita overflow */
-  max-width: calc(100% - 60px);
-  /* espaço para ícone do carrinho */
+  max-width: calc(100% - 60px); /* espaço para ícone do carrinho */
   white-space: normal;
-  /* para permitir quebra */
 }
 
 header h1 {
   font-size: 2.4rem;
-  /* color fallback para quando o efeito não funcionar */
   color: #f0e6c8;
   text-transform: uppercase;
   letter-spacing: 0.15em;
   margin: 0;
   line-height: 1.1;
-
 }
-
-
-
-
 
 /* Subtítulo do site */
 header p {
@@ -104,7 +90,6 @@ header p {
   width: 18px;
   height: 18px;
   display: none;
-  /* inicia oculto */
   justify-content: center;
   align-items: center;
   box-shadow: 0 0 6px #bfa05a;
@@ -115,11 +100,12 @@ header p {
 /* Container dos cards */
 .container {
   max-width: 1200px;
-  margin: 0 auto 3rem;
-  padding: 1rem 1rem 1rem;
+  margin: 0 auto;
+  padding: 1rem 1rem 3rem; /* Espaçamento inferior maior para não sobrepor o footer */
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 1.8rem;
+  margin-bottom: 80px; /* Garante que o conteúdo não fique por baixo do footer */
 }
 
 /* Responsividade para smartphones - 2 colunas lado a lado */
@@ -140,19 +126,16 @@ header p {
     margin: 1rem auto 2rem;
   }
 
-  /* Ajuste no header-texts para quebra natural */
   .header-texts {
     max-width: 100%;
     text-align: center;
   }
 
-  header h1,
-  header p {
+  header h1, header p {
     white-space: normal;
     overflow-wrap: break-word;
   }
 
-  /* Cards menores no mobile */
   .card {
     max-width: 100%;
     border-radius: 10px;
@@ -313,20 +296,19 @@ header p {
 }
 
 /* Estilos do Footer */
-/* Estilos do Footer */
 footer {
     background-color: #111;
     color: #fff;
     text-align: center;
     padding: 20px;
-    position: fixed;  /* Fixa o footer na parte inferior */
-    bottom: 0;        /* Coloca o footer na parte inferior da tela */
+    position: sticky;
+    bottom: 0;
     width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    z-index: 999;     /* Garante que o footer esteja acima de outros conteúdos */
+    z-index: 999; /* Garante que o footer esteja acima de outros conteúdos */
 }
 
 footer .footer-content {
@@ -342,7 +324,7 @@ footer p {
 
 /* Ícone do WhatsApp */
 .whatsapp-icon {
-    width: 20px;
+    width:20px;
     height: 20px;
     border-radius: 50%;
     background-color: #25d366;
@@ -361,7 +343,6 @@ footer p {
     width: 30px;
     height: 30px;
 }
-
 
 /* Modal do carrinho */
 #cart-modal {
@@ -432,72 +413,4 @@ footer p {
 #cart-items .btn-remove:hover {
   background-color: #d45f5f;
   color: #1c1b1b;
-}
-/* Estilo botão hamburger */
-#hamburger-btn {
-  background: transparent;
-  border: none;
-  cursor: pointer;
-  padding: 0.25rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: transform 0.3s ease;
-  flex-shrink: 0;
-}
-
-#hamburger-btn:hover {
-  transform: scale(1.1);
-}
-
-/* Menu oculto por padrão */
-.menu-list {
-  position: absolute;
-  top: 70px; /* abaixo do header, ajuste conforme necessário */
-  right: 8.5rem;
-  background: #1f1e1e;
-  border: 2px solid #d4c06d;
-  border-radius: 10px;
-  list-style: none;
-  padding: 0.5rem 1rem;
-  box-shadow: 0 0 10px #bfa05a;
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-  min-width: 160px;
-  z-index: 1100;
-}
-
-/* Esconde o menu quando hidden */
-.menu-list[hidden] {
-  display: none !important;
-}
-
-/* Estilo dos links do menu */
-.menu-list a {
-  color: #d4c06d;
-  text-decoration: none;
-  font-weight: 600;
-  font-family: 'Montserrat', sans-serif;
-  padding: 0.4rem 0.2rem;
-  transition: background-color 0.25s, color 0.25s;
-  border-radius: 6px;
-  display: block;
-}
-
-.menu-list a:hover {
-  background-color: #d4c06d;
-  color: #1c1b1b;
-}
-
-/* Responsividade: esconder menu no desktop (opcional), mostrar hamburger */
-@media (min-width: 900px) {
-  /* Você pode esconder esse menu mobile e criar um menu desktop */
-  /* Exemplo: */
-  #hamburger-btn {
-    display: none;
-  }
-  .menu-list {
-    display: none !important;
-  }
 }
