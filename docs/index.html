@@ -18,7 +18,7 @@
     </div>
 
     <div class="navicons">
-      <nav >
+      <nav>
         <button id="hamburger-btn" aria-label="Abrir menu" aria-expanded="false" aria-controls="menu-list">
           <!-- Ícone hamburger simples SVG -->
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#d4c06d" stroke-width="3"
@@ -28,7 +28,7 @@
             <line x1="3" y1="18" x2="21" y2="18" />
           </svg>
         </button>
-        <ul id="menu-list" class="menu-list" >
+        <ul id="menu-list" class="menu-list">
           <li><a href="index.html">Início</a></li>
           <li><a href="cosmeticos.html">Cosméticos</a></li>
           <li><a href="produtos2.html">Produtos 2</a></li>
@@ -92,6 +92,9 @@
         <button class="btn-volume" data-volume="5ml">5ml</button>
         <button class="btn-volume" data-volume="10ml">10ml</button>
       </div>
+      <p class="spray-info" style="margin-top: 0.4rem; font-size: 0.85rem; color: #ccc;">
+        Aproximadamente 50 borrifadas
+      </p>
       <div class="price-display">
         <p>Preço: R$ <span class="price-value">${perfume.value.value5ml}</span></p>
       </div>
@@ -101,46 +104,73 @@
 
       const btns = card.querySelectorAll('.btn-volume');
       const priceValue = card.querySelector('.price-value');
+      const sprayInfo = card.querySelector('.spray-info');
       const addBtn = card.querySelector('.btn-add');
 
-      // Define volume padrão como 5ml
+      // Define volume padrão
       let selectedVolume = '5ml';
 
-      // Marca como ativo o botão do volume padrão (5ml)
+      // Marca botão ativo correspondente ao volume padrão
       btns.forEach(btn => {
         if (btn.getAttribute('data-volume') === selectedVolume) {
           btn.classList.add('active');
         }
       });
 
-      // Atualiza preço quando mudar volume
+      // Atualiza o texto de borrifadas conforme volume selecionado
+      function updateSprayInfo(volume) {
+        switch (volume) {
+          case '2ml':
+            sprayInfo.textContent = 'Aproximadamente 20 borrifadas';
+            break;
+          case '5ml':
+            sprayInfo.textContent = 'Aproximadamente 50 borrifadas';
+            break;
+          case '10ml':
+            sprayInfo.textContent = 'Aproximadamente 100 borrifadas';
+            break;
+          default:
+            sprayInfo.textContent = '';
+        }
+      }
+
+      // Garante o texto inicial correto
+      updateSprayInfo(selectedVolume);
+
+      // Evento dos botões de volume
       btns.forEach(btn => {
         btn.addEventListener('click', (event) => {
-          event.stopPropagation(); // evita que clique no botão dispare o clique no card
+          event.stopPropagation();
           btns.forEach(b => b.classList.remove('active'));
           btn.classList.add('active');
 
           selectedVolume = btn.getAttribute('data-volume');
 
+          // Atualiza o preço
           if (selectedVolume === '2ml') priceValue.textContent = perfume.value.value2ml;
           else if (selectedVolume === '5ml') priceValue.textContent = perfume.value.value5ml;
           else if (selectedVolume === '10ml') priceValue.textContent = perfume.value.value10ml;
+
+          // Atualiza o texto das borrifadas
+          updateSprayInfo(selectedVolume);
         });
       });
 
       // Botão adicionar ao carrinho
       addBtn.addEventListener('click', (event) => {
-        event.stopPropagation(); // evita que clique dispare o clique no card
+        event.stopPropagation();
         addToCart(perfume, selectedVolume);
       });
 
-      // Clique no card redireciona para a página de detalhes (exceto nos botões)
+      // Clique no card redireciona para página de detalhes (exceto nos botões)
       card.addEventListener('click', () => {
         window.location.href = `detalhes/index.html?product=${encodeURIComponent(productId)}`;
       });
 
       return card;
     }
+
+
 
     // Adiciona item no carrinho (incrementa se já existe)
     function addToCart(perfume, volume) {
