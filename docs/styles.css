@@ -1,13 +1,15 @@
 /* Reset básico e corpo */
-body, html {
+body,
+html {
   margin: 0;
   padding: 0;
-  background: linear-gradient(135deg, #2b2a2a, #1c1b1b);
+  background: linear-gradient(180deg, rgb(33, 17, 0) 0%);
   font-family: 'Montserrat', sans-serif;
   color: #f5f5f7;
   min-height: 100vh;
   box-sizing: border-box;
-  overflow-x: hidden; /* Impede scroll horizontal */
+  overflow-x: hidden;
+  /* Impede scroll horizontal */
 }
 
 /* Header fixo com duas partes */
@@ -16,11 +18,12 @@ header {
   top: 0;
   left: 0;
   right: 0;
-  background: linear-gradient(45deg, #bfa05a, #6f592a);
-  box-shadow: 0 4px 10px rgba(191, 160, 90, 0.7);
+  background: linear-gradient(180deg, rgb(33, 17, 0) 0%, rgb(79, 47, 1) 100%);
+  box-shadow: 0 1px 6px rgba(191, 160, 90, 0.7);
   padding: 1rem 2rem;
   display: flex;
-  flex-direction: column; /* Duas partes: uma no topo e outra na parte inferior */
+  flex-direction: column;
+  /* Duas partes: uma no topo e outra na parte inferior */
   justify-content: center;
   align-items: center;
   gap: 1rem;
@@ -33,7 +36,8 @@ header {
 .header-texts {
   display: flex;
   flex-direction: column;
-  align-items: center; /* Centra o texto */
+  align-items: center;
+  /* Centra o texto */
   white-space: normal;
 }
 
@@ -101,8 +105,10 @@ nav {
 #cart-icon {
   position: relative;
   cursor: pointer;
-  width: 36px;  /* Tamanho fixo do ícone */
-  height: 36px;  /* Tamanho fixo do ícone */
+  width: 36px;
+  /* Tamanho fixo do ícone */
+  height: 36px;
+  /* Tamanho fixo do ícone */
   flex-shrink: 0;
   display: flex;
   align-items: center;
@@ -110,15 +116,18 @@ nav {
 }
 
 #cart-icon svg {
-  width: 24px;  /* Tamanho do SVG */
-  height: 24px;  /* Tamanho do SVG */
+  width: 24px;
+  /* Tamanho do SVG */
+  height: 24px;
+  /* Tamanho do SVG */
   fill: #d4c06d;
   filter: drop-shadow(0 0 2px #bfa05a);
   transition: transform 0.3s ease;
 }
 
 #cart-icon:hover svg {
-  transform: scale(1.2);  /* Efeito de zoom ao passar o mouse */
+  transform: scale(1.2);
+  /* Efeito de zoom ao passar o mouse */
 }
 
 #cart-count {
@@ -132,7 +141,8 @@ nav {
   border-radius: 50%;
   width: 18px;
   height: 18px;
-  display: none;  /* Contador começa invisível */
+  display: none;
+  /* Contador começa invisível */
   justify-content: center;
   align-items: center;
   box-shadow: 0 0 6px #bfa05a;
@@ -173,7 +183,8 @@ nav {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 1.8rem;
-  margin-bottom: 80px; /* Garante que o conteúdo não fique por baixo do footer */
+  margin-bottom: 80px;
+  /* Garante que o conteúdo não fique por baixo do footer */
   width: 100%;
   box-sizing: border-box;
 }
@@ -195,7 +206,8 @@ nav {
     text-align: center;
   }
 
-  header h1, header p {
+  header h1,
+  header p {
     white-space: normal;
     overflow-wrap: break-word;
   }
@@ -233,9 +245,9 @@ nav {
 
 /* Card do perfume */
 .card {
-  background: #1f1e1e;
+  background:  linear-gradient(180deg, rgb(33, 17, 0) 0%, rgb(79, 47, 1) 100%);;
   border-radius: 12px;
-  box-shadow: 0 0 18px rgba(191, 160, 90, 0.5), inset 0 0 14px #d4c06d;
+  box-shadow: 0 0 1px rgba(191, 160, 90, 0.5), inset 0 0 1px #d4c06d;
   overflow: hidden;
   display: flex;
   flex-direction: column;
@@ -245,7 +257,7 @@ nav {
 
 .card:hover {
   transform: translateY(-8px) scale(1.02);
-  box-shadow: 0 12px 35px rgba(191, 160, 90, 0.85), inset 0 0 18px #d4c06d;
+  box-shadow: 0 5px 20px rgba(191, 160, 90, 0.85), inset 0 0 8px #d4c06d;
 }
 
 .card img {
@@ -360,7 +372,8 @@ footer {
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  z-index: 999; /* Garante que o footer esteja acima de outros conteúdos */
+  z-index: 999;
+  /* Garante que o footer esteja acima de outros conteúdos */
 }
 
 footer .footer-content {
@@ -477,7 +490,9 @@ footer p {
   transition: transform 0.3s ease;
   flex-shrink: 0;
 }
-#hamburger-btn, .menu-list {
+
+#hamburger-btn,
+.menu-list {
   display: none !important;
 }
 
@@ -516,8 +531,10 @@ footer p {
   border-radius: 6px;
   display: block;
 }
+
 #menu-list a {
-  font-size: 12px;;
+  font-size: 12px;
+  ;
 }
 
 .menu-list a:hover {

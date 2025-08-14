@@ -36,6 +36,7 @@
 			.then(data => {
 				const perfumes = data.perfumes || [];
 				const product = perfumes.find(p => {
+					
 					const slug = p.id || p.name.toLowerCase().replace(/\s+/g, '-');
 					return slug === productSlug;
 				});
@@ -83,10 +84,19 @@
                             <li><strong>Notas de Fundo:</strong> ${product.construcao.fundo}</li>
                         </ul>
                     </section>
+
+					<!-- Construção da Fragrância -->
+                   <section id="ocasioes">
+                        <h3>Tempo de Duração</h3>
+                        <ul>
+                            ${product.beneficio.map(ocasião => `<li>${ocasião}</li>`).join('')}
+                        </ul>
+                    </section>
                 `;
 			})
 			.catch(err => {
 				const container = document.getElementById('product-details');
+				console.log(err.message)
 				container.innerHTML = `<p class="error">Informação em breve...</p>`;
 			});
 	</script>
