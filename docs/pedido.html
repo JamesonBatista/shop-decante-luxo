@@ -211,7 +211,7 @@
 			}, 0);
 
 			orderMessage += `\nTotal: R$ ${totalPrice}\n\n`;
-			orderMessage += `Por favor, confirme os dados, estaremos respondendo seu pedido.`;
+			orderMessage += `Por favor ${dataUser.nome}, confirme os dados, estaremos respondendo seu pedido.`;
 
 			// Enviar mensagem para o WhatsApp
 			const whatsappURL = `https://wa.me/558799706139?text=${encodeURIComponent(orderMessage)}`;

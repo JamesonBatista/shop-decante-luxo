@@ -77,3 +77,20 @@ document.addEventListener("click", (e) => {
     hamburgerBtn.setAttribute("aria-expanded", "false");
   }
 });
+
+const main = document.querySelector('main.container');
+const h1 = document.getElementById('frase');
+
+main.addEventListener('scroll', () => {
+  const fadeStart = 0;
+  const fadeEnd = 150;
+
+  let opacity = 1;
+
+  if (main.scrollTop > fadeStart) {
+    opacity = 1 - (main.scrollTop - fadeStart) / (fadeEnd - fadeStart);
+    if (opacity < 0) opacity = 0;
+  }
+
+  h1.style.opacity = opacity;
+});
