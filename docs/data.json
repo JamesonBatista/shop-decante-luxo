@@ -57,7 +57,7 @@
       }
     },
     {
-      "image": "https://cdn.awsli.com.br/600x450/1384/1384913/produto/57076554/513369533d.jpg",
+      "image": "./images/libre.png",
       "name": "La Vie Est Belle Eau de Parfum",
       "description": "La Vie Est Belle é uma fragrância inspirada pela felicidade e liberdade, com notas florais e gourmand, projetada para mulheres que buscam expressar sua verdadeira essência. Criada pelos renomados perfumistas Olivier Polge, Dominique Ropion e Anne Flipo, ela é uma verdadeira obra-prima olfativa.",
       "value": {

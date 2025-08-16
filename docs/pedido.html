@@ -112,13 +112,12 @@
 
 				return `
         <div class="cart-item" data-index="${index}">
-          <strong>${item.perfume.name}</strong> (${item.volume})<br/>
+          <strong>${item.perfume.name}</strong> ( ${item.volume} )<br/><br/>
           Quantidade: 
           <button class="btn-decrement" aria-label="Diminuir quantidade">-</button>
           ${item.quantity}
-          <button class="btn-increment" aria-label="Aumentar quantidade">+</button><br/>
-          Preço unitário: R$ ${price}<br/>
-          Subtotal: R$ ${subtotal}<br/>
+          <button class="btn-increment" aria-label="Aumentar quantidade">+</button><br/><br/>
+          Preço unitário: R$ ${price}<br/><br/>
           <button class="btn-remove" aria-label="Remover item">Remover</button>
         </div>
       `;
