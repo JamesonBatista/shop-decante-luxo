@@ -7,12 +7,16 @@
 
 body {
 	font-family: 'Montserrat', sans-serif;
-	background-color: #f9f9f9;
+	background: linear-gradient(180deg, rgb(33, 17, 0) 0%);
 	/* Fundo suave e elegante */
 	color: #333;
 	line-height: 1.6;
 	padding: 2rem;
 	min-height: 100vh;
+	color: #fff;
+}
+main p{
+	color: aliceblue;
 }
 
 /* Header limpo e sofisticado */
@@ -27,7 +31,7 @@ header h1 {
 	font-weight: 700;
 	font-size: 2rem;
 	/* Maior tamanho para dar um destaque elegante */
-	color: #111;
+	color:antiquewhite;
 	user-select: none;
 	letter-spacing: 1px;
 }
@@ -50,6 +54,9 @@ header h1 {
 	color: white;
 	outline: none;
 }
+h1, p, li, h3{
+	color: white;
+}
 
 /* Conteúdo da página */
 .container {
@@ -59,6 +66,7 @@ header h1 {
 	background-color: #fff;
 	border-radius: 10px;
 	box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+	background: linear-gradient(180deg, rgb(33, 17, 0) 0%, rgb(79, 47, 1) 100%);
 	/* Sombra suave para dar profundidade */
 }
 
@@ -67,7 +75,7 @@ header h1 {
 	font-size: 2.5rem;
 	/* Destacar o nome do produto */
 	font-weight: 700;
-	color: #333;
+	color: aliceblue;
 	margin-bottom: 1.5rem;
 	letter-spacing: 0.5px;
 }
@@ -75,7 +83,7 @@ header h1 {
 /* Descrição do produto */
 .product-description {
 	font-size: 1.2rem;
-	color: #666;
+	color:aliceblue;
 	/* Cor suave e agradável para leitura */
 	margin-bottom: 1.5rem;
 	white-space: pre-line;
