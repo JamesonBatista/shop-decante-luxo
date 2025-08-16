@@ -91,8 +91,8 @@
         <button class="btn-volume" data-volume="5ml">5ml</button>
         <button class="btn-volume" data-volume="10ml">10ml</button>
       </div>
-      <p class="spray-info" style="margin-top: 0.4rem; font-size: 0.85rem; color: #ccc;">
-        Aproximadamente 50 borrifadas
+      <p class="spray-info" style="margin-top: 0.4rem; font-size: 0.70rem; color: #ccc;">
+        50 borrifadas
       </p>
       <button class="btn-add">R$ <span class="price-value">${perfume.value.value5ml}</span></button>
     </div>
@@ -117,13 +117,13 @@
       function updateSprayInfo(volume) {
         switch (volume) {
           case '2ml':
-            sprayInfo.textContent = 'Aproximadamente 20 borrifadas';
+            sprayInfo.textContent = '20 borrifadas';
             break;
           case '5ml':
-            sprayInfo.textContent = 'Aproximadamente 50 borrifadas';
+            sprayInfo.textContent = '50 borrifadas';
             break;
           case '10ml':
-            sprayInfo.textContent = 'Aproximadamente 100 borrifadas';
+            sprayInfo.textContent = '100 borrifadas';
             break;
           default:
             sprayInfo.textContent = '';
