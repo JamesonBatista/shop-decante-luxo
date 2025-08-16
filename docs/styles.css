@@ -51,7 +51,8 @@ header h1 {
   text-align: center;
 }
 
-header h1, p {
+header h1,
+p {
   position: relative;
   color: #d4c06d;
   /* cor dourada base */
@@ -64,7 +65,7 @@ header h1, p {
   background-size: 200% 100%;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  animation: light-shimmer 6s linear infinite;
+  animation: light-shimmer 8s linear infinite;
 }
 
 @keyframes light-shimmer {
@@ -114,7 +115,6 @@ nav {
   display: flex;
   gap: 1rem;
   list-style: none;
-  margin: 40px;
   padding: 0;
 }
 
@@ -296,7 +296,7 @@ nav {
 }
 
 .card img {
-width: 100%;
+  width: 100%;
   object-fit: contain;
   display: block;
   margin: auto;
@@ -523,10 +523,6 @@ footer p {
   flex-shrink: 0;
 }
 
-#hamburger-btn,
-.menu-list {
-  display: none !important;
-}
 
 #hamburger-btn:hover {
   transform: scale(1.1);
@@ -534,8 +530,8 @@ footer p {
 
 .menu-list {
   position: absolute;
-  top: 70px;
-  right: 8.5rem;
+  top: 110px;
+  right: 11.5rem;
   background: #1f1e1e;
   border: 2px solid #d4c06d;
   border-radius: 10px;
@@ -577,7 +573,7 @@ footer p {
 /* Responsividade: esconder menu no desktop (opcional), mostrar hamburger */
 @media (min-width: 900px) {
   #hamburger-btn {
-    display: none;
+    display: flex;
   }
 
   .menu-list {
