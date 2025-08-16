@@ -303,7 +303,6 @@ nav {
 }
 
 .volume-buttons {
-  margin-top: 1rem;
   display: flex;
   gap: 0.5rem;
   justify-content: center;
@@ -311,7 +310,7 @@ nav {
 
 .btn-volume {
   flex: 1;
-  padding: 0.5rem 3px;
+  padding: 0.5rem 5px;
   background: transparent;
   border: 2px solid #d4c06d;
   border-radius: 8px;
