@@ -50,17 +50,17 @@ header h1 {
   line-height: 1.1;
   text-align: center;
 }
-header h1 {
+
+header h1, p {
   position: relative;
-  color: #d4c06d; /* cor dourada base */
+  color: #d4c06d;
+  /* cor dourada base */
   font-weight: 700;
   overflow: hidden;
-  background: linear-gradient(
-    90deg,
-    #d4c06d 25%,
-    #ffffff 50%,
-    #d4c06d 75%
-  );
+  background: linear-gradient(90deg,
+      #d4c06d 25%,
+      #ffffff 50%,
+      #d4c06d 75%);
   background-size: 200% 100%;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -71,6 +71,7 @@ header h1 {
   0% {
     background-position: 200% 0;
   }
+
   100% {
     background-position: -200% 0;
   }
@@ -295,7 +296,7 @@ nav {
 }
 
 .card img {
-
+width: 100%;
   object-fit: contain;
   display: block;
   margin: auto;
