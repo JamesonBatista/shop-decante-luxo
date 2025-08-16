@@ -226,7 +226,7 @@ nav {
   }
 
   .card img {
-    height: 160px;
+    height: 140px;
     border-bottom: 1.5px solid #bfa05a;
   }
 
@@ -271,7 +271,6 @@ nav {
 
 .card img {
 
-  height: 200px;
   object-fit: contain;
   display: block;
   margin: auto;
