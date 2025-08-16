@@ -226,8 +226,8 @@ nav {
   }
 
   .card img {
-    height: 140px;
-    border-bottom: 1.5px solid #bfa05a;
+    height: 170px;
+    border-bottom: 0.1px solid #bfa05a;
   }
 
   .card-content h2 {
@@ -274,7 +274,7 @@ nav {
   object-fit: contain;
   display: block;
   margin: auto;
-  border-bottom: 2px solid #bfa05a;
+  border-bottom: 0.1px solid #bfa05a;
 }
 
 .card-content {

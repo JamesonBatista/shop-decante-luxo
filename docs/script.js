@@ -78,10 +78,10 @@ document.addEventListener("click", (e) => {
   }
 });
 
-const main = document.querySelector('main.container');
-const h1 = document.getElementById('frase');
+const main = document.querySelector("main.container");
+const h1 = document.getElementById("frase");
 
-main.addEventListener('scroll', () => {
+main.addEventListener("scroll", () => {
   const fadeStart = 0;
   const fadeEnd = 150;
 

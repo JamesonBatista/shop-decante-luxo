@@ -86,7 +86,6 @@
       card.innerHTML = `
     <img src="${perfume.image}" alt="${perfume.name}">
     <div class="card-content">
-      <h2>${perfume.name}</h2>
       <div class="volume-buttons">
         <button class="btn-volume" data-volume="2ml">2ml</button>
         <button class="btn-volume" data-volume="5ml">5ml</button>
@@ -95,10 +94,7 @@
       <p class="spray-info" style="margin-top: 0.4rem; font-size: 0.85rem; color: #ccc;">
         Aproximadamente 50 borrifadas
       </p>
-      <div class="price-display">
-        <p>Preço: R$ <span class="price-value">${perfume.value.value5ml}</span></p>
-      </div>
-      <button class="btn-add">Adicionar</button>
+      <button class="btn-add">R$ <span class="price-value">${perfume.value.value5ml}</span></button>
     </div>
   `;
 
