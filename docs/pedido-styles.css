@@ -5,7 +5,7 @@
 
 /* Container do pedido — centralizado, com largura máxima */
 header{
-	height: 150px;;
+	height: 160px;;
 }
 .container {
 	max-width: 600px;
@@ -198,7 +198,7 @@ h2 {
 }
 
 /* Destaque do preço com juros ao lado do radio "Débito/Crédito" */
-#payment-methods span#price-with-interest {
+#payment-methods span#price-with-interest, #price-with-discount {
 	margin-left: 0.3rem;
 	font-weight: 700;
 	color: #d4c06d;
