@@ -12,41 +12,50 @@
 
 <body>
 
-	<!-- Container do header dinâmico -->
-	<header id="site-header">
-		<!-- O conteúdo do header será carregado aqui via JS -->
+	<header>
+		<div class="header-texts">
+			<h1>Parfum d'Or</h1>
+			<p>Decantes de Luxo em cada Gota</p>
+		</div>
+
+		<div class="navicons">
+			<nav>
+				<button id="hamburger-btn" aria-label="Abrir menu" aria-expanded="false" aria-controls="menu-list">
+					<!-- Ícone hamburger simples SVG -->
+					<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#d4c06d" stroke-width="3"
+						stroke-linecap="round" stroke-linejoin="round">
+						<line x1="3" y1="6" x2="21" y2="6" />
+						<line x1="3" y1="12" x2="21" y2="12" />
+						<line x1="3" y1="18" x2="21" y2="18" />
+					</svg>
+				</button>
+				<ul id="menu-list" class="menu-list" hidden>
+					<li><a href="index.html">Início</a></li>
+					<li><a href="pedido.html">Pedido</a></li>
+					<li><a href="cosmeticos.html">Cosméticos</a></li>
+					<li><a href="combo.html">combos</a></li>
+					<!-- outros links aqui -->
+				</ul>
+			</nav>
+			<div id="cart-icon" title="Ver carrinho" aria-label="Abrir carrinho" tabindex="0" role="button">
+				<!-- Ícone do carrinho SVG -->
+				<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+					<path
+						d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zm10 0c-1.1 0-1.99.9-1.99 2S15.9 22 17 22s2-.9 2-2-.9-2-2-2zM7.16 14l1.25-2.5h7.98c.62 0 1.1-.48 1.1-1.1 0-.04-.02-.07-.02-.11L16.11 7H6l-.14-.29-1-2.01H1v2h2l3.6 7.59-1.35 2.44C4.17 17.05 4 17.48 4 18c0 1.1.9 2 2 2h12v-2H7.42c-.07-.19-.17-.37-.26-.57z">
+					</path>
+				</svg>
+				<div id="cart-count" style="display:none">0</div>
+			</div>
+		</div>
 	</header>
 
-	<main>
-		<h1>Bem-vindo ao Parfum d'Or!</h1>
-		<p>Este é um exemplo onde o header está em arquivo externo, e o script do menu está separado.</p>
-	</main>
+  <main class="container" id="perfumes-container" data-categoria="combos" message="Ainda não temos COMBOS cadastrados, mas estamos trabalhando nisso.">
+    <!-- Cards serão inseridos aqui via JS -->
+  </main>
 
-	<!-- Inserindo o script externo do menu hamburger -->
-	<script src="menu-hamburguer.js" defer></script>
 
-	<script>
-		// Carregar o conteúdo do header externo (header.html)
-		document.addEventListener('DOMContentLoaded', () => {
-			fetch('header.html') // header.html deve estar na mesma pasta
-				.then(response => response.text())
-				.then(html => {
-					document.getElementById('site-header').innerHTML = html;
 
-					setupHamburgerMenu({
-						hamburgerBtnSelector: '#hamburger-btn',
-						menuSelector: '#menu-list'
-					});
-
-				})
-				.catch(error => {
-					console.error('Erro ao carregar header:', error);
-					document.getElementById('site-header').textContent = 'Erro ao carregar o menu.';
-				});
-		});
-	</script>
-
-	<script src="../app.js" defer></script>
+	<script src="app.js" defer></script>
 </body>
 
 </html>

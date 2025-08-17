@@ -16,7 +16,11 @@ document.addEventListener("DOMContentLoaded", () => {
     const card = document.createElement("div");
     card.classList.add("card");
 
-      card.innerHTML = `
+    const productId =
+      perfume.id || perfume.name.replace(/\s+/g, "-").toLowerCase();
+    card.setAttribute("data-product-id", productId);
+
+    card.innerHTML = `
     <img src="${perfume.image}" alt="${perfume.name}">
     <div class="card-content">
       <div class="volume-buttons">
@@ -55,6 +59,11 @@ document.addEventListener("DOMContentLoaded", () => {
     addBtn.addEventListener("click", () => {
       addToCart(perfume, selectedVolume);
     });
+	      // Clique no card redireciona para página de detalhes (exceto nos botões)
+      card.addEventListener('click', () => {
+        window.location.href = `detalhes/index.html?product=${encodeURIComponent(productId)}`;
+      });
+
 
     return card;
   }
@@ -97,7 +106,7 @@ document.addEventListener("DOMContentLoaded", () => {
       .then((data) => {
         const produtos = data[categoria];
         if (!produtos || produtos.length === 0) {
-          container.innerHTML = `<p style="color: #f00; text-align: center;">Nenhum produto encontrado para a categoria "${categoria}"</p>`;
+          container.innerHTML = `<p style="color: #f00; text-align: center; position: fixed;">${message}</p>`;
           return;
         }
         container.innerHTML = ""; // limpa container antes de inserir
@@ -130,6 +139,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
+
   // Navega para página pedido ao clicar no carrinho
   cartIcon.addEventListener("click", () => {
     localStorage.setItem("cart", JSON.stringify(cart));
@@ -153,8 +163,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Obtém categoria da front-end via atributo data-categoria no container, default "perfumes"
   const categoria = container?.getAttribute("data-categoria") || "perfumes";
+  const message =
+    container?.getAttribute("message") ||
+    "Produto ainda não cadastrado, aguarde...";
 
-  loadPerfumes(categoria);
+  loadPerfumes(categoria, message);
 
   updateCartCount();
 });

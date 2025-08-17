@@ -153,14 +153,37 @@
   ],
   "cosmeticos": [
     {
-      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRCa0oDqiAJZe-aDtNeSy7jtzsz5GiRSm2Q3h1LzJy4gyAUXWxdgeOCTh1TX4CNi21RjmI&usqp=CAU",
-      "name": "Hidratante Louis Vuitton",
-      "description": "Uma experiência rica e intensa de madeira oud com toques orientais e especiarias raras.",
+      "image": "./images/lavie.png",
+      "name": "La Vie Est Belle Eau de Parfum",
+      "description": "La Vie Est Belle é uma fragrância inspirada pela felicidade e liberdade, com notas florais e gourmand, projetada para mulheres que buscam expressar sua verdadeira essência. Criada pelos renomados perfumistas Olivier Polge, Dominique Ropion e Anne Flipo, ela é uma verdadeira obra-prima olfativa.",
       "value": {
         "value2ml": 30,
-        "value5ml": 60,
-        "value10ml": 120
-      }
+        "value5ml": 70,
+        "value10ml": 140
+      },
+      "detalhes": {
+        "description": "Com notas de groselha preta, pera, íris, jasmim, flor de laranjeira, patchouli, fava tonka, baunilha e pralinê, La Vie Est Belle é uma fragrância que se destaca pela sua doçura e elegância, criando uma experiência sensorial marcante e duradoura."
+      },
+      "usos": [
+        "Aplique no ponto de pulsação: Borrife o perfume nas áreas de maior pulsação (pulso, atrás das orelhas, no pescoço e até atrás dos joelhos) para uma melhor projeção e fixação.",
+        "Não esfregue o perfume: Evite esfregar o perfume após a aplicação, pois isso pode quebrar as moléculas da fragrância e reduzir sua intensidade.",
+        "Use com moderação: La Vie Est Belle tem uma fragrância intensa, por isso, poucas borrifadas já são suficientes para durar o dia todo."
+      ],
+      "ocasioes": [
+        "Eventos Noturnos: A combinação doce e floral da fragrância é ideal para noites especiais, jantares ou festas elegantes.",
+        "Momentos de Conquista: A fragrância é uma verdadeira celebração da felicidade, sendo perfeita para momentos de conquista, celebrações ou até mesmo para um presente inesquecível.",
+        "Dia a Dia: Sua intensidade moderada também permite que seja usada durante o dia, conferindo um toque de elegância e sofisticação ao cotidiano."
+      ],
+      "construcao": {
+        "topo": "Groselha preta e pera - Uma entrada fresca e frutada que desperta os sentidos.",
+        "coracao": "Íris, jasmim e flor de laranjeira - A combinação floral traz profundidade e sofisticação à fragrância.",
+        "fundo": "Patchouli, fava tonka, baunilha e pralinê - Um fundo quente e doce, criando um efeito envolvente e duradouro."
+      },
+      "beneficio": [
+        "2 ml → 20 borrifadas. Cada 4 borrifadas → 8 h de fragrância, 20 ÷ 4 = 5, Multiplicando pelas horas que cada 4 borrifadas dão: 5 × 8 = 40h",
+        "5 ml → 50 borrifadas. Cada 4 borrifadas → 8 h de fragrância, 50 ÷ 4 = 12,5, Multiplicando pelas horas que cada 4 borrifadas dão: 12,5 × 8 = 100 horas ",
+        "10ml → 100 borrifadas. Cada 4 borrifadas → 8 h de fragrância, 100 ÷ 4 = 25, Multiplicando pelas horas que cada 4 borrifadas dão: 25 × 8 = 200 horas "
+      ]
     }
   ]
 }
