@@ -40,6 +40,48 @@ header {
   /* Centra o texto */
   white-space: normal;
 }
+h3 {
+  position: relative;
+  font-weight: 700;
+  font-family: 'Playfair Display', serif;
+  font-size: 1rem;
+  color: transparent;
+  background: linear-gradient(90deg, #d4c06d 0%, #bba451 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+/* Bola de luz dourada animada menor */
+h3::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: -10%;
+  width: 25px;
+  height: 25px;
+  background: radial-gradient(circle, rgba(212,192,109,0.85) 20%, rgba(212,192,109,0) 70%);
+  border-radius: 50%;
+  filter: drop-shadow(0 0 6px rgba(212,192,109,0.7));
+  transform: translateY(-50%);
+  animation: goldenBall 4.2s linear infinite;
+  pointer-events: none;
+  mix-blend-mode: screen;
+  z-index: 10;
+}
+
+/* Animação da bola atravessando o texto */
+@keyframes goldenBall {
+  0% {
+    left: -10%;
+  }
+  100% {
+    left: 110%;
+  }
+}
+
 
 header h1 {
   font-size: 2.4rem;
