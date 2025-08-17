@@ -1,96 +1,144 @@
-// Função para fechar todos os detalhes exibidos
-function fecharTodosDetalhes() {
-  const produtos = document.querySelectorAll(".produto.expanded");
-  produtos.forEach((produto) => {
-    produto.classList.remove("expanded");
+// Elementos DOM usados
+const container = document.getElementById('perfumes-container');
+const cartIcon = document.getElementById('cart-icon');
+const cartCountEl = document.getElementById('cart-count');
+const hamburgerBtn = document.getElementById('hamburger-btn');
+const menuList = document.getElementById('menu-list');
+
+// Array que armazena os itens do carrinho
+let cart = [];
+
+// Função para criar um card de perfume
+function createCard(perfume) {
+  const card = document.createElement('div');
+  card.classList.add('card');
+
+      card.innerHTML = `
+    <img src="${perfume.image}" alt="${perfume.name}">
+    <div class="card-content">
+      <div class="volume-buttons">
+        <button class="btn-volume" data-volume="2ml">2ml</button>
+        <button class="btn-volume" data-volume="5ml">5ml</button>
+        <button class="btn-volume" data-volume="10ml">10ml</button>
+      </div>
+      <p class="spray-info" style="margin-top: 0.4rem; font-size: 0.70rem; color: #ccc;">
+        50 borrifadas
+      </p>
+      <button class="btn-add">R$ <span class="price-value">${perfume.value.value5ml}</span></button>
+    </div>
+  `;
+
+  const btns = card.querySelectorAll('.btn-volume');
+  const priceValue = card.querySelector('.price-value');
+  const addBtn = card.querySelector('.btn-add');
+
+  let selectedVolume = '2ml';
+
+  btns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      btns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      selectedVolume = btn.getAttribute('data-volume');
+
+      if (selectedVolume === '2ml') priceValue.textContent = perfume.value.value2ml;
+      else if (selectedVolume === '5ml') priceValue.textContent = perfume.value.value5ml;
+      else if (selectedVolume === '10ml') priceValue.textContent = perfume.value.value10ml;
+    });
   });
 
-  const detalhes = document.querySelectorAll(".detalhes-produto.show");
-  detalhes.forEach((det) => {
-    det.classList.remove("show");
+  addBtn.addEventListener('click', () => {
+    addToCart(perfume, selectedVolume);
   });
+
+  return card;
 }
 
-function mostrarDetalhes(produtoId) {
-  fecharTodosDetalhes(); // Fecha outros detalhes antes
+// Função para adicionar item ao carrinho
+function addToCart(perfume, volume) {
+  const itemIndex = cart.findIndex(
+    item => item.perfume.name === perfume.name && item.volume === volume
+  );
 
-  const produto = document.getElementById(produtoId);
-  const detalhes = document.getElementById("detalhes-" + produtoId);
-
-  produto.classList.add("expanded"); // Adiciona classe para estilo "luxo"
-  detalhes.classList.add("show"); // Exibe detalhes via classe para animação suave
-}
-
-function fecharDetalhes(produtoId) {
-  const produto = document.getElementById(produtoId);
-  const detalhes = document.getElementById("detalhes-" + produtoId);
-
-  produto.classList.remove("expanded");
-  detalhes.classList.remove("show");
-}
-
-function adicionarCarrinho(produto, preco) {
-  // Recupera itens do localStorage ou inicia array vazio
-  let carrinho = JSON.parse(localStorage.getItem("carrinho")) || [];
-
-  carrinho.push({ produto, preco });
-  localStorage.setItem("carrinho", JSON.stringify(carrinho));
-
-  atualizarContadorCarrinho();
-}
-
-// Atualiza o contador do carrinho com animação suave
-function atualizarContadorCarrinho() {
-  const cartCount = document.getElementById("cart-count");
-  let carrinho = JSON.parse(localStorage.getItem("carrinho")) || [];
-  let totalItens = carrinho.length;
-
-  cartCount.textContent = totalItens;
-
-  // Animação de destaque para chamar atenção
-  cartCount.classList.add("bump");
-  setTimeout(() => {
-    cartCount.classList.remove("bump");
-  }, 300);
-}
-
-// Chamando atualização ao carregar página para manter estado
-window.addEventListener("load", atualizarContadorCarrinho);
-
-const hamburgerBtn = document.getElementById("hamburger-btn");
-const menuList = document.getElementById("menu-list");
-
-hamburgerBtn.addEventListener("click", () => {
-  const expanded = hamburgerBtn.getAttribute("aria-expanded") === "true";
-  hamburgerBtn.setAttribute("aria-expanded", String(!expanded));
-  if (menuList.hasAttribute("hidden")) {
-    menuList.removeAttribute("hidden");
+  if (itemIndex > -1) {
+    cart[itemIndex].quantity++;
   } else {
-    menuList.setAttribute("hidden", "");
+    cart.push({ perfume, volume, quantity: 1 });
+  }
+  updateCartCount();
+  localStorage.setItem('cart', JSON.stringify(cart));
+}
+
+// Atualiza contador do carrinho no ícone
+function updateCartCount() {
+  const totalItems = cart.reduce((acc, item) => acc + item.quantity, 0);
+  if (totalItems > 0) {
+    cartCountEl.style.display = 'flex';
+    cartCountEl.textContent = totalItems;
+  } else {
+    cartCountEl.style.display = 'none';
+  }
+}
+
+// Função para carregar perfumes do data.json
+function loadPerfumes() {
+  fetch('data.json')
+    .then(response => {
+      if (!response.ok) {
+        throw new Error(`Erro ao carregar data.json: ${response.statusText}`);
+      }
+      return response.json();
+    })
+    .then(data => {
+      data.cosmeticos.forEach(dataObject => {
+        const card = createCard(dataObject);
+        container.appendChild(card);
+      });
+    })
+    .catch(error => {
+      container.innerHTML = `<p style="color: #f00; text-align: center;">Ainda não existe produtos cadastrados</p>`;
+    });
+}
+
+// Toggle menu hamburger
+hamburgerBtn.addEventListener('click', () => {
+  const expanded = hamburgerBtn.getAttribute('aria-expanded') === 'true';
+  hamburgerBtn.setAttribute('aria-expanded', String(!expanded));
+  if (menuList.hasAttribute('hidden')) {
+    menuList.removeAttribute('hidden');
+  } else {
+    menuList.setAttribute('hidden', '');
   }
 });
 
-// Fechar menu ao clicar fora (opcional)
-document.addEventListener("click", (e) => {
+// Fecha menu ao clicar fora
+document.addEventListener('click', (e) => {
   if (!hamburgerBtn.contains(e.target) && !menuList.contains(e.target)) {
-    menuList.setAttribute("hidden", "");
-    hamburgerBtn.setAttribute("aria-expanded", "false");
+    menuList.setAttribute('hidden', '');
+    hamburgerBtn.setAttribute('aria-expanded', 'false');
   }
 });
 
-const main = document.querySelector("main.container");
-const h1 = document.getElementById("frase");
+// Navega para página pedido ao clicar no carrinho
+cartIcon.addEventListener('click', () => {
+  localStorage.setItem('cart', JSON.stringify(cart));
+  window.location.href = 'pedido.html';
+});
 
-main.addEventListener("scroll", () => {
-  const fadeStart = 0;
-  const fadeEnd = 150;
-
-  let opacity = 1;
-
-  if (main.scrollTop > fadeStart) {
-    opacity = 1 - (main.scrollTop - fadeStart) / (fadeEnd - fadeStart);
-    if (opacity < 0) opacity = 0;
+// Carregar carrinho salvo no localStorage
+function loadCartFromStorage() {
+  const savedCart = localStorage.getItem('cart');
+  if (savedCart) {
+    try {
+      cart = JSON.parse(savedCart);
+    } catch {
+      cart = [];
+    }
   }
+}
 
-  h1.style.opacity = opacity;
+// Inicialização ao carregar a página
+document.addEventListener('DOMContentLoaded', () => {
+  loadCartFromStorage();
+  loadPerfumes();
+  updateCartCount();
 });

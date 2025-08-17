@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<link rel="stylesheet" href="styles.css" />
+
+	<title>Exemplo com Header e Menu Externos</title>
+
+</head>
+
+<body>
+
+	<!-- Container do header dinâmico -->
+	<header id="site-header">
+		<!-- O conteúdo do header será carregado aqui via JS -->
+	</header>
+
+	<main>
+		<h1>Bem-vindo ao Parfum d'Or!</h1>
+		<p>Este é um exemplo onde o header está em arquivo externo, e o script do menu está separado.</p>
+	</main>
+
+	<!-- Inserindo o script externo do menu hamburger -->
+	<script src="menu-hamburguer.js" defer></script>
+
+	<script>
+		// Carregar o conteúdo do header externo (header.html)
+		document.addEventListener('DOMContentLoaded', () => {
+			fetch('header.html') // header.html deve estar na mesma pasta
+				.then(response => response.text())
+				.then(html => {
+					document.getElementById('site-header').innerHTML = html;
+
+					setupHamburgerMenu({
+						hamburgerBtnSelector: '#hamburger-btn',
+						menuSelector: '#menu-list'
+					});
+
+				})
+				.catch(error => {
+					console.error('Erro ao carregar header:', error);
+					document.getElementById('site-header').textContent = 'Erro ao carregar o menu.';
+				});
+		});
+	</script>
+
+	<script src="../app.js" defer></script>
+</body>
+
+</html>
