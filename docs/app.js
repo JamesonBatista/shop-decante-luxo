@@ -1,154 +1,173 @@
 // app.js
 
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener('DOMContentLoaded', () => {
   // Elementos DOM
-  const container = document.getElementById("perfumes-container");
-  const cartIcon = document.getElementById("cart-icon");
-  const cartCountEl = document.getElementById("cart-count");
-  const hamburgerBtn = document.getElementById("hamburger-btn");
-  const menuList = document.getElementById("menu-list");
+  const container = document.getElementById('perfumes-container');
+  const cartIcon = document.getElementById('cart-icon');
+  const cartCountEl = document.getElementById('cart-count');
+  const hamburgerBtn = document.getElementById('hamburger-btn');
+  const menuList = document.getElementById('menu-list');
 
-  // Array que armazena os itens do carrinho
+  // Carrinho interno: array de { perfume, volume, quantity }
   let cart = [];
 
   // Função para criar um card de perfume
   function createCard(perfume) {
-    const card = document.createElement("div");
-    card.classList.add("card");
+    const card = document.createElement('div');
+    card.classList.add('card');
 
-    const productId =
-      perfume.id || perfume.name.replace(/\s+/g, "-").toLowerCase();
-    card.setAttribute("data-product-id", productId);
+    // Cria um id/slug para identificar o produto
+    const productId = perfume.id || perfume.name.replace(/\s+/g, '-').toLowerCase();
+    card.setAttribute('data-product-id', productId);
 
     card.innerHTML = `
-    <img src="${perfume.image}" alt="${perfume.name}">
-    <div class="card-content">
-      <div class="volume-buttons">
-        <button class="btn-volume" data-volume="2ml">2ml</button>
-        <button class="btn-volume" data-volume="5ml">5ml</button>
-        <button class="btn-volume" data-volume="10ml">10ml</button>
+      <img src="${perfume.image}" alt="${perfume.name}">
+      <div class="card-content">
+        <div class="volume-buttons">
+          <button class="btn-volume" data-volume="2ml">2ml</button>
+          <button class="btn-volume" data-volume="5ml">5ml</button>
+          <button class="btn-volume" data-volume="10ml">10ml</button>
+        </div>
+        <p class="spray-info" style="margin-top: 0.4rem; font-size: 0.70rem; color: #ccc;">
+          50 borrifadas
+        </p>
+        <button class="btn-add">R$ <span class="price-value">${perfume.value.value5ml}</span></button>
       </div>
-      <p class="spray-info" style="margin-top: 0.4rem; font-size: 0.70rem; color: #ccc;">
-        50 borrifadas
-      </p>
-      <button class="btn-add">R$ <span class="price-value">${perfume.value.value5ml}</span></button>
-    </div>
-  `;
+    `;
 
-    const btns = card.querySelectorAll(".btn-volume");
-    const priceValue = card.querySelector(".price-value");
-    const addBtn = card.querySelector(".btn-add");
+    const btns = card.querySelectorAll('.btn-volume');
+    const priceValue = card.querySelector('.price-value');
+    const sprayInfo = card.querySelector('.spray-info');
+    const addBtn = card.querySelector('.btn-add');
 
-    let selectedVolume = "2ml";
+    // Volume padrão
+    let selectedVolume = '5ml';
 
-    btns.forEach((btn) => {
-      btn.addEventListener("click", () => {
-        btns.forEach((b) => b.classList.remove("active"));
-        btn.classList.add("active");
-        selectedVolume = btn.getAttribute("data-volume");
+    // Marca botão ativo correspondente ao volume padrão
+    btns.forEach(btn => {
+      if (btn.getAttribute('data-volume') === selectedVolume) {
+        btn.classList.add('active');
+      }
+    });
 
-        if (selectedVolume === "2ml")
-          priceValue.textContent = perfume.value.value2ml;
-        else if (selectedVolume === "5ml")
-          priceValue.textContent = perfume.value.value5ml;
-        else if (selectedVolume === "10ml")
-          priceValue.textContent = perfume.value.value10ml;
+    // Atualiza o texto de borrifadas conforme volume selecionado
+    function updateSprayInfo(volume) {
+      switch (volume) {
+        case '2ml': sprayInfo.textContent = '20 borrifadas'; break;
+        case '5ml': sprayInfo.textContent = '50 borrifadas'; break;
+        case '10ml': sprayInfo.textContent = '100 borrifadas'; break;
+        default: sprayInfo.textContent = '';
+      }
+    }
+    updateSprayInfo(selectedVolume);
+
+    // Evento dos botões de volume
+    btns.forEach(btn => {
+      btn.addEventListener('click', event => {
+        event.stopPropagation();
+        btns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        selectedVolume = btn.getAttribute('data-volume');
+
+        // Atualiza o preço
+        if (selectedVolume === '2ml') priceValue.textContent = perfume.value.value2ml;
+        else if (selectedVolume === '5ml') priceValue.textContent = perfume.value.value5ml;
+        else if (selectedVolume === '10ml') priceValue.textContent = perfume.value.value10ml;
+
+        // Atualiza o texto das borrifadas
+        updateSprayInfo(selectedVolume);
       });
     });
 
-    addBtn.addEventListener("click", () => {
+    // Botão adicionar ao carrinho (impede propagação para não abrir detalhes)
+    addBtn.addEventListener('click', event => {
+      event.stopPropagation();
       addToCart(perfume, selectedVolume);
     });
-	      // Clique no card redireciona para página de detalhes (exceto nos botões)
-      card.addEventListener('click', () => {
-        window.location.href = `detalhes/index.html?product=${encodeURIComponent(productId)}`;
-      });
 
+    // Clique no card redireciona para página de detalhes, exceto nos botões
+    card.addEventListener('click', event => {
+      window.location.href = `detalhes/index.html?product=${encodeURIComponent(productId)}`;
+    });
 
     return card;
   }
 
-  // Função para adicionar item ao carrinho
+  // Adiciona item no carrinho (incrementa se já existe)
   function addToCart(perfume, volume) {
-    const itemIndex = cart.findIndex(
-      (item) => item.perfume.name === perfume.name && item.volume === volume
-    );
-
+    const itemIndex = cart.findIndex(item => item.perfume.name === perfume.name && item.volume === volume);
     if (itemIndex > -1) {
       cart[itemIndex].quantity++;
     } else {
       cart.push({ perfume, volume, quantity: 1 });
     }
     updateCartCount();
-    localStorage.setItem("cart", JSON.stringify(cart));
+    localStorage.setItem('cart', JSON.stringify(cart));
   }
 
-  // Atualiza contador do carrinho no ícone
+  // Atualiza contador do ícone do carrinho
   function updateCartCount() {
     const totalItems = cart.reduce((acc, item) => acc + item.quantity, 0);
     if (totalItems > 0) {
-      cartCountEl.style.display = "flex";
+      cartCountEl.style.display = 'flex';
       cartCountEl.textContent = totalItems;
     } else {
-      cartCountEl.style.display = "none";
+      cartCountEl.style.display = 'none';
     }
   }
 
-  // Função para carregar produtos do data.json por categoria
-  function loadPerfumes(categoria) {
-    fetch("data.json")
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error(`Erro ao carregar data.json: ${response.statusText}`);
-        }
+  // Carrega perfumes do data.json conforme categoria e mensagem
+  function loadPerfumes(categoria, message) {
+    fetch('data.json')
+      .then(response => {
+        if (!response.ok) throw new Error(`Erro ao carregar data.json: ${response.statusText}`);
         return response.json();
       })
-      .then((data) => {
+      .then(data => {
         const produtos = data[categoria];
         if (!produtos || produtos.length === 0) {
-          container.innerHTML = `<p style="color: #f00; text-align: center; position: fixed;">${message}</p>`;
+          container.innerHTML = `<p style="color: #f00; text-align: center;">${message}</p>`;
           return;
         }
-        container.innerHTML = ""; // limpa container antes de inserir
-        produtos.forEach((produto) => {
+        container.innerHTML = '';
+        produtos.forEach(produto => {
           const card = createCard(produto);
           container.appendChild(card);
         });
       })
-      .catch((error) => {
-        container.innerHTML = `<p style="color: #f00; text-align: center;">Erro ao carregar produtos: ${error.message}</p>`;
+      .catch(error => {
+        container.innerHTML = `<p style="color: #f00; text-align: center;">${error.message}</p>`;
       });
   }
 
-  // Toggle menu hamburger
-  hamburgerBtn.addEventListener("click", () => {
-    const expanded = hamburgerBtn.getAttribute("aria-expanded") === "true";
-    hamburgerBtn.setAttribute("aria-expanded", String(!expanded));
-    if (menuList.hasAttribute("hidden")) {
-      menuList.removeAttribute("hidden");
+  // Toggle menu hambúrguer
+  hamburgerBtn.addEventListener('click', () => {
+    const expanded = hamburgerBtn.getAttribute('aria-expanded') === 'true';
+    hamburgerBtn.setAttribute('aria-expanded', String(!expanded));
+    if (menuList.hasAttribute('hidden')) {
+      menuList.removeAttribute('hidden');
     } else {
-      menuList.setAttribute("hidden", "");
+      menuList.setAttribute('hidden', '');
     }
   });
 
   // Fecha menu ao clicar fora
-  document.addEventListener("click", (e) => {
+  document.addEventListener('click', (e) => {
     if (!hamburgerBtn.contains(e.target) && !menuList.contains(e.target)) {
-      menuList.setAttribute("hidden", "");
-      hamburgerBtn.setAttribute("aria-expanded", "false");
+      menuList.setAttribute('hidden', '');
+      hamburgerBtn.setAttribute('aria-expanded', 'false');
     }
   });
 
-
-  // Navega para página pedido ao clicar no carrinho
-  cartIcon.addEventListener("click", () => {
-    localStorage.setItem("cart", JSON.stringify(cart));
-    window.location.href = "pedido.html";
+  // Navega para página pedido ao clicar no ícone do carrinho
+  cartIcon.addEventListener('click', () => {
+    localStorage.setItem('cart', JSON.stringify(cart));
+    window.location.href = 'pedido.html';
   });
 
-  // Carregar carrinho salvo no localStorage
+  // Carregar carrinho salvo no localStorage se existir
   function loadCartFromStorage() {
-    const savedCart = localStorage.getItem("cart");
+    const savedCart = localStorage.getItem('cart');
     if (savedCart) {
       try {
         cart = JSON.parse(savedCart);
@@ -161,13 +180,10 @@ document.addEventListener("DOMContentLoaded", () => {
   // Inicialização
   loadCartFromStorage();
 
-  // Obtém categoria da front-end via atributo data-categoria no container, default "perfumes"
-  const categoria = container?.getAttribute("data-categoria") || "perfumes";
-  const message =
-    container?.getAttribute("message") ||
-    "Produto ainda não cadastrado, aguarde...";
+  // Obtém categoria e mensagem do front
+  const categoria  = container?.getAttribute('data-categoria') || 'perfumes';
+  const message = container?.getAttribute('data-message') || 'Produto ainda não cadastrado, aguarde...';
 
   loadPerfumes(categoria, message);
-
   updateCartCount();
 });

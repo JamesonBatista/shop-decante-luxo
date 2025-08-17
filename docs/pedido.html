@@ -5,9 +5,11 @@
 	<meta charset="UTF-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
 	<title>Seu Pedido - Parfum d'Or</title>
+	<link rel="stylesheet" href="styles.css" />
 	<link rel="stylesheet" href="pedido-styles.css" />
 	<link href="https://fonts.googleapis.com/css2?family=Playfair+Display&family=Montserrat&display=swap"
 		rel="stylesheet" />
+
 </head>
 
 <body>
@@ -21,15 +23,27 @@
 		<a href="index.html" title="Voltar para a loja" aria-label="Voltar para a loja" id="back-to-store">
 			← Voltar
 		</a>
+		<!-- <h2 id="cart-modal-title">Seu Pedido</h2> -->
+
 	</header>
 
 	<main class="container">
-		<h2 id="cart-modal-title">Seu Pedido</h2>
 		<div id="cart-items">
 			<!-- Itens do carrinho carregados via JS -->
 		</div>
 
 		<div id="cart-total"></div>
+
+		<div id="payment-methods">
+			<label>
+				<input type="radio" name="payment" value="pix" required />
+				PIX — preço normal
+			</label>
+			<label>
+				<input type="radio" name="payment" value="card" />
+				Débito/Crédito — preço total + 5% (R$ <span id="price-with-interest">0,00</span>)
+			</label>
+		</div>
 
 		<button id="btn-send-order" class="btn-add">Enviar Pedido para Whatsapp</button>
 
@@ -92,6 +106,12 @@
 		const cartTotalEl = document.getElementById('cart-total');
 		const btnSendOrder = document.getElementById('btn-send-order');
 		const orderForm = document.getElementById('order-form');
+		const priceWithInterestEl = document.getElementById('price-with-interest');
+		const paymentRadios = document.getElementsByName('payment');
+
+		function formatPrice(value) {
+			return value.toFixed(2).replace('.', ',');
+		}
 
 		function renderCartItems() {
 			if (cart.length === 0) {
@@ -99,17 +119,17 @@
 				cartTotalEl.textContent = '';
 				btnSendOrder.style.display = 'none';
 				orderForm.style.display = 'none';
+				updatePriceWithInterest();
 				return;
 			}
 
 			btnSendOrder.style.display = 'block';
 
 			cartItemsEl.innerHTML = cart.map((item, index) => {
-				const price = item.volume === '2ml' ? item.perfume.value.value2ml :
-					item.volume === '5ml' ? item.perfume.value.value5ml :
-						item.perfume.value.value10ml;
-				const subtotal = price * item.quantity;
-
+				const price =
+					item.volume === '2ml' ? item.perfume.value.value2ml :
+						item.volume === '5ml' ? item.perfume.value.value5ml :
+							item.perfume.value.value10ml;
 				return `
         <div class="cart-item" data-index="${index}">
           <strong>${item.perfume.name}</strong> ( ${item.volume} )<br/><br/>
@@ -125,12 +145,16 @@
 
 			// Atualizar total
 			const total = cart.reduce((acc, item) => {
-				const price = item.volume === '2ml' ? item.perfume.value.value2ml :
-					item.volume === '5ml' ? item.perfume.value.value5ml :
-						item.perfume.value.value10ml;
+				const price =
+					item.volume === '2ml' ? item.perfume.value.value2ml :
+						item.volume === '5ml' ? item.perfume.value.value5ml :
+							item.perfume.value.value10ml;
 				return acc + price * item.quantity;
 			}, 0);
-			cartTotalEl.textContent = `Total: R$ ${total}`;
+			cartTotalEl.textContent = `Total: R$ ${formatPrice(total)}`;
+
+			// Atualiza preço com juros para opção cartão
+			updatePriceWithInterest();
 
 			// Adicionar eventos aos botões
 			cartItemsEl.querySelectorAll('.btn-remove').forEach((btn, i) => {
@@ -164,6 +188,18 @@
 			renderCartItems();
 		}
 
+		function updatePriceWithInterest() {
+			const total = cart.reduce((acc, item) => {
+				const price =
+					item.volume === '2ml' ? item.perfume.value.value2ml :
+						item.volume === '5ml' ? item.perfume.value.value5ml :
+							item.perfume.value.value10ml;
+				return acc + price * item.quantity;
+			}, 0);
+			const totalWithInterest = total * 1.05;
+			priceWithInterestEl.textContent = formatPrice(totalWithInterest);
+		}
+
 		// Exibe o formulário ao clicar em "Enviar Pedido para WhatsApp"
 		btnSendOrder.addEventListener('click', () => {
 			orderForm.style.display = 'block';
@@ -175,55 +211,61 @@
 		orderForm.addEventListener('submit', (e) => {
 			e.preventDefault();
 
+			// Verifica se forma de pagamento foi selecionada
+			const selectedPayment = Array.from(paymentRadios).find(r => r.checked);
+			if (!selectedPayment) {
+				alert('Por favor, selecione a forma de pagamento.');
+				return;
+			}
+
 			const dataUser = {
 				nome: orderForm.name.value.trim(),
 				endereco: orderForm.address.value.trim(),
 				cidade: orderForm.city.value.trim(),
 				uf: orderForm.state.value,
 				cep: orderForm.cep.value.trim(),
+				pagamento: selectedPayment.value,
 				pedido: cart
 			};
-
-			if (!dataUser.uf) {
-				alert('Por favor, selecione o UF');
-				return;
-			}
 
 			// Construção da mensagem do pedido para o WhatsApp
 			let orderMessage = `*Parfum d'Or*\n\n`;
 			orderMessage += `Nome: ${dataUser.nome}\n`;
 			orderMessage += `Endereço: ${dataUser.endereco}, ${dataUser.cidade} - ${dataUser.uf}, ${dataUser.cep}\n\n`;
+			orderMessage += `Forma de Pagamento: ${dataUser.pagamento === 'pix' ? 'PIX' : 'Débito/Crédito (+5%)'}\n\n`;
 			orderMessage += `*Itens no Pedido:*\n`;
 
 			dataUser.pedido.forEach(item => {
-				const price = item.volume === '2ml' ? item.perfume.value.value2ml :
-					item.volume === '5ml' ? item.perfume.value.value5ml :
-						item.perfume.value.value10ml;
+				const price =
+					item.volume === '2ml' ? item.perfume.value.value2ml :
+						item.volume === '5ml' ? item.perfume.value.value5ml :
+							item.perfume.value.value10ml;
 				orderMessage += `${item.perfume.name} (${item.volume}) - R$ ${price} x ${item.quantity} = R$ ${price * item.quantity}\n`;
 			});
 
-			const totalPrice = dataUser.pedido.reduce((acc, item) => {
-				const price = item.volume === '2ml' ? item.perfume.value.value2ml :
-					item.volume === '5ml' ? item.perfume.value.value5ml :
-						item.perfume.value.value10ml;
+			const totalBase = dataUser.pedido.reduce((acc, item) => {
+				const price =
+					item.volume === '2ml' ? item.perfume.value.value2ml :
+						item.volume === '5ml' ? item.perfume.value.value5ml :
+							item.perfume.value.value10ml;
 				return acc + price * item.quantity;
 			}, 0);
+			const totalFinal = dataUser.pagamento === 'card' ? totalBase * 1.05 : totalBase;
 
-			orderMessage += `\nTotal: R$ ${totalPrice}\n\n`;
+			orderMessage += `\nTotal: R$ ${formatPrice(totalFinal)}\n\n`;
 			orderMessage += `Por favor ${dataUser.nome}, confirme os dados, estaremos respondendo seu pedido.`;
 
-			// Enviar mensagem para o WhatsApp
+			// Envia para o WhatsApp
 			const whatsappURL = `https://wa.me/558799706139?text=${encodeURIComponent(orderMessage)}`;
-
-			// Redireciona para o WhatsApp com a mensagem preenchida
 			window.open(whatsappURL, '_blank');
 
-			// Reseta o carrinho e o formulário após o envio
+			// Limpa carrinho e formulário
 			cart = [];
 			localStorage.removeItem('cart');
 			renderCartItems();
 			orderForm.reset();
 			orderForm.style.display = 'none';
+			btnSendOrder.style.display = 'block';
 		});
 
 		renderCartItems();

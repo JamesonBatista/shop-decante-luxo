@@ -4,6 +4,9 @@
 /* Ajustes específicos para a página de pedido */
 
 /* Container do pedido — centralizado, com largura máxima */
+header{
+	height: 150px;;
+}
 .container {
 	max-width: 600px;
 	margin: 5rem auto 3rem auto;
@@ -13,12 +16,13 @@
 }
 
 /* Título do pedido */
-.container h2 {
+h2 {
 	color: #d4c06d;
 	font-family: 'Playfair Display', serif;
 	margin-bottom: 1rem;
 	position: fixed;
 	top: 100px;
+	left: 15px;
 }
 
 /* Formulário de dados */
@@ -160,4 +164,53 @@
 	font-size: 1rem;
 	color: #1c1b1b;
 	transition: background-color 0.3s ease;
+}
+
+/* Container do grupo de pagamento, alinhado horizontalmente com espaçamento e harmonia visual */
+#payment-methods {
+	margin: 2rem 0 3rem 0;
+	display: flex;
+	gap: 2.5rem;
+	font-family: 'Montserrat', sans-serif;
+	font-size: 1rem;
+	color: #f5f5f7;
+	/* cor clara conforme formulário */
+	user-select: none;
+	align-items: center;
+}
+
+/* Label do radio com flex para alinhar input e texto centralizados verticalmente */
+#payment-methods label {
+	cursor: pointer;
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
+	font-weight: 600;
+}
+
+/* Personalização do input radio para ficar elegante e consistente */
+#payment-methods input[type="radio"] {
+	width: 20px;
+	height: 20px;
+	accent-color: #d4c06d;
+	/* cor dourada para rádio */
+	cursor: pointer;
+}
+
+/* Destaque do preço com juros ao lado do radio "Débito/Crédito" */
+#payment-methods span#price-with-interest {
+	margin-left: 0.3rem;
+	font-weight: 700;
+	color: #d4c06d;
+	/* mesmo dourado do tema */
+	font-family: 'Montserrat', sans-serif;
+}
+
+/* Ajuste para telas menores: empilhar verticalmente e reduzir gap */
+@media (max-width: 480px) {
+	#payment-methods {
+		flex-direction: column;
+		align-items: flex-start;
+		gap: 1rem;
+	}
 }
