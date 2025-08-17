@@ -4,9 +4,11 @@
 /* Ajustes específicos para a página de pedido */
 
 /* Container do pedido — centralizado, com largura máxima */
-header{
-	height: 160px;;
+header {
+	height: 160px;
+	;
 }
+
 .container {
 	max-width: 600px;
 	margin: 5rem auto 3rem auto;
@@ -37,6 +39,27 @@ h2 {
 /* Estilos dos labels */
 #order-form label {
 	font-weight: 600;
+}
+
+.empty-cart-msg {
+	text-align: center;
+	margin: 4rem 0 2rem;
+	color: #d4c06d;
+	font-family: 'Playfair Display', serif;
+	font-size: 1.3rem;
+	font-weight: 600;
+}
+
+.empty-cart-img {
+	display: block;
+	margin: 0 auto 1.5rem auto;
+	width: 300px;
+	max-width: 90vw;
+	opacity: 0.85;
+}
+
+#payment-methods {
+	margin-bottom: 2rem;
 }
 
 /* Inputs e select do formulário */
@@ -198,7 +221,8 @@ h2 {
 }
 
 /* Destaque do preço com juros ao lado do radio "Débito/Crédito" */
-#payment-methods span#price-with-interest, #price-with-discount {
+#payment-methods span#price-with-interest,
+#price-with-discount {
 	margin-left: 0.3rem;
 	font-weight: 700;
 	color: #d4c06d;

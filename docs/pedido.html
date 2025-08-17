@@ -9,6 +9,7 @@
 	<link rel="stylesheet" href="pedido-styles.css" />
 	<link href="https://fonts.googleapis.com/css2?family=Playfair+Display&family=Montserrat&display=swap"
 		rel="stylesheet" />
+
 </head>
 
 <body>
@@ -18,7 +19,6 @@
 			<h1>Parfum d'Or</h1>
 			<p>Decantes de Luxo em cada Gota</p>
 		</div>
-
 		<a href="index.html" title="Voltar para a loja" aria-label="Voltar para a loja" id="back-to-store">
 			← Voltar
 		</a>
@@ -31,7 +31,8 @@
 
 		<div id="cart-total"></div>
 
-		<div id="payment-methods">
+		<!-- Forma de pagamento só aparecerá via JS -->
+		<div id="payment-methods" style="display:none;">
 			<label>
 				<input type="radio" name="payment" value="pix" required />
 				PIX - 5% desconto - R$ <span id="price-with-discount">0,00</span>
@@ -46,16 +47,12 @@
 
 		<form id="order-form" style="display: none;">
 			<h3>Dados para entrega</h3>
-
 			<label for="name">Nome Completo:</label>
 			<input type="text" id="name" name="name" required />
-
 			<label for="address">Endereço:</label>
 			<input type="text" id="address" name="address" required />
-
 			<label for="city">Cidade:</label>
 			<input type="text" id="city" name="city" required />
-
 			<label for="state">UF:</label>
 			<select id="state" name="state" required>
 				<option value="">Selecione</option>
@@ -87,10 +84,8 @@
 				<option value="SE">SE</option>
 				<option value="TO">TO</option>
 			</select>
-
 			<label for="cep">CEP:</label>
 			<input type="text" id="cep" name="cep" required pattern="[0-9]{5}-?[0-9]{3}" placeholder="00000-000" />
-
 			<button type="submit">Confirmar Pedido</button>
 		</form>
 	</main>
@@ -105,6 +100,8 @@
 		const btnSendOrder = document.getElementById('btn-send-order');
 		const orderForm = document.getElementById('order-form');
 		const paymentRadios = document.getElementsByName('payment');
+		const paymentMethodsEl = document.getElementById('payment-methods');
+
 
 		function formatPrice(value) {
 			return value.toFixed(2).replace('.', ',');
@@ -112,15 +109,24 @@
 
 		function renderCartItems() {
 			if (cart.length === 0) {
-				cartItemsEl.innerHTML = '<p>Seu carrinho está vazio.</p>';
+				// Oculta forma de pagamento, botões e formulário
+				paymentMethodsEl.style.display = 'none';
+				btnSendOrder.style.display = 'none';
+				orderForm.style.display = 'none';
 				cartTotalEl.textContent = '';
 				priceWithInterestEl.textContent = '0,00';
 				priceWithDiscountEl.textContent = '0,00';
-				btnSendOrder.style.display = 'none';
-				orderForm.style.display = 'none';
+
+				// Exibe mensagem + imagem
+				cartItemsEl.innerHTML = `
+                    <div class="empty-cart-msg">Sua bolsa de decantes está vazia</div>
+                	<img src="./images/vazio.png"
+                        alt="Bolsa vazia" class="empty-cart-img" />
+                `;
 				return;
 			}
 
+			paymentMethodsEl.style.display = 'flex';
 			btnSendOrder.style.display = 'block';
 
 			cartItemsEl.innerHTML = cart.map((item, index) => {
@@ -129,15 +135,15 @@
 						item.volume === '5ml' ? item.perfume.value.value5ml :
 							item.perfume.value.value10ml;
 				return `
-        <div class="cart-item" data-index="${index}">
-          <strong>${item.perfume.name}</strong> ( ${item.volume} )<br><br>
-          Quantidade: 
-          <button class="btn-decrement" aria-label="Diminuir quantidade">-</button>
-          ${item.quantity}
-          <button class="btn-increment" aria-label="Aumentar quantidade">+</button><br><br>
-          Preço unitário: R$ ${price}<br><br>
-          <button class="btn-remove" aria-label="Remover item">Remover</button>
-        </div>`;
+                    <div class="cart-item" data-index="${index}">
+                        <strong>${item.perfume.name}</strong> ( ${item.volume} )<br><br>
+                        Quantidade: 
+                        <button class="btn-decrement" aria-label="Diminuir quantidade">-</button>
+                        ${item.quantity}
+                        <button class="btn-increment" aria-label="Aumentar quantidade">+</button><br><br>
+                        Preço unitário: R$ ${price}<br><br>
+                        <button class="btn-remove" aria-label="Remover item">Remover</button>
+                    </div>`;
 			}).join('');
 
 			const total = cart.reduce((acc, item) => {
@@ -192,9 +198,10 @@
 				return acc + price * item.quantity;
 			}, 0);
 
-			// Débito/Crédito = preço total cheio
+			// Débito/Crédito = preço total
 			const totalWithInterest = total;
-			// PIX = 5% de desconto
+
+			// PIX = 5% desconto
 			const totalWithDiscount = total * 0.95;
 
 			priceWithInterestEl.textContent = formatPrice(totalWithInterest);
