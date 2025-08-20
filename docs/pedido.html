@@ -238,14 +238,14 @@
 			orderMessage += `Nome: ${dataUser.nome}\n`;
 			orderMessage += `Endereço: ${dataUser.endereco}, ${dataUser.cidade} - ${dataUser.uf}, ${dataUser.cep}\n\n`;
 			orderMessage += `Forma de Pagamento: ${dataUser.pagamento === 'pix' ? 'PIX (-5%)' : 'Débito/Crédito'}\n\n`;
-			orderMessage += `*Itens no Pedido:*\n`;
+			orderMessage += `*Itens no Pedido:*\n\n`;
 
 			dataUser.pedido.forEach(item => {
 				const price =
 					item.volume === '2ml' ? item.perfume.value.value2ml :
 						item.volume === '5ml' ? item.perfume.value.value5ml :
 							item.perfume.value.value10ml;
-				orderMessage += `${item.perfume.name} (${item.volume}) - R$ ${price} x ${item.quantity} = R$ ${price * item.quantity}\n`;
+				orderMessage += `${item.perfume.name} (${item.volume}) - R$ ${price} x ${item.quantity} = R$ ${price * item.quantity}\n\n`;
 			});
 
 			const totalBase = dataUser.pedido.reduce((acc, item) => {

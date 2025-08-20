@@ -40,6 +40,7 @@ header {
   /* Centra o texto */
   white-space: normal;
 }
+
 .combos {
   position: relative;
   font-weight: 700;
@@ -62,9 +63,9 @@ header {
   left: -10%;
   width: 25px;
   height: 25px;
-  background: radial-gradient(circle, rgba(212,192,109,0.85) 20%, rgba(212,192,109,0) 70%);
+  background: radial-gradient(circle, rgba(212, 192, 109, 0.85) 20%, rgba(212, 192, 109, 0) 70%);
   border-radius: 50%;
-  filter: drop-shadow(0 0 6px rgba(212,192,109,0.7));
+  filter: drop-shadow(0 0 6px rgba(212, 192, 109, 0.7));
   transform: translateY(-50%);
   animation: goldenBall 4.2s linear infinite;
   pointer-events: none;
@@ -77,6 +78,7 @@ header {
   0% {
     left: -10%;
   }
+
   100% {
     left: 110%;
   }
@@ -243,6 +245,7 @@ nav {
     flex-direction: column;
     gap: 0.5rem;
     margin-top: 1rem;
+    right: 11.5rem;
   }
 
   #menu-list li {
@@ -573,7 +576,7 @@ footer p {
 .menu-list {
   position: absolute;
   top: 110px;
-  right: 11.5rem;
+  right: 80rem;
   background: #1f1e1e;
   border: 2px solid #d4c06d;
   border-radius: 10px;
@@ -619,6 +622,7 @@ footer p {
   }
 
   .menu-list {
-    display: none !important;
+    display: none;
+
   }
 }
