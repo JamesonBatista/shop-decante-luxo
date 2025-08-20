@@ -40,7 +40,7 @@ header {
   /* Centra o texto */
   white-space: normal;
 }
-h3 {
+.combos {
   position: relative;
   font-weight: 700;
   font-family: 'Playfair Display', serif;
@@ -55,7 +55,7 @@ h3 {
 }
 
 /* Bola de luz dourada animada menor */
-h3::before {
+.combos::before {
   content: '';
   position: absolute;
   top: 50%;
