@@ -22,42 +22,65 @@ document.addEventListener("DOMContentLoaded", () => {
     card.setAttribute("data-product-id", productId);
 
     // Verifica se a categoria é 'combos' e monta o innerHTML conforme solicitado
-    if (categoria === "combos") {
-      card.innerHTML = `
-      <img src="${perfume.image}" alt="${perfume.name}">
-      <div class="card-content">
-        <div class="volume-buttons">
-          <button class="btn-volume" data-volume="2ml">2ml</button>
-          <button class="btn-volume" data-volume="5ml">5ml</button>
-          <button class="btn-volume" data-volume="10ml">10ml</button>
-        </div>
-        <p class="spray-info" style="margin-top: 0.4rem; font-size: 0.70rem; color: #ccc;">
-          50 borrifadas
-        </p>
-        <p class="spray-info" style="margin-top: 0.4rem; font-size: 0.70rem; color: #ccc;">
-          ${perfume.description || ""}
-        </p>
-        <button class="btn-add">R$ <span class="price-value">${
-          perfume.value.value5ml
-        }</span></button>
+if (categoria === "combos") {
+  card.innerHTML = `
+    <img src="${perfume.image}" alt="${perfume.name}">
+    <div class="card-content">
+      <div class="volume-buttons">
+        <button class="btn-volume" data-volume="2ml">2ml</button>
+        <button class="btn-volume" data-volume="5ml">5ml</button>
+        <button class="btn-volume" data-volume="10ml">10ml</button>
       </div>
-    `;
-    } else {
-      card.innerHTML = `
-      <img src="${perfume.image}" alt="${perfume.name}">
-      <div class="card-content">
-        <div class="volume-buttons">
-          <button class="btn-volume" data-volume="2ml">2ml</button>
-          <button class="btn-volume" data-volume="5ml">5ml</button>
-          <button class="btn-volume" data-volume="10ml">10ml</button>
+      <p class="spray-info" style="margin-top: 0.4rem; font-size: 0.70rem; color: #ccc;">
+        50 borrifadas
+      </p>
+      <p class="spray-info" style="margin-top: 0.4rem; font-size: 0.70rem; color: #ccc;">
+        ${perfume.description || ""}
+      </p>
+
+      <div class="price-container" style="margin-top: 1rem; text-align: center; font-family: 'Montserrat', sans-serif; color: #f0e6c8;">
+        <div class="price-main" style="font-weight: 700; font-size: 1.2rem;">
+          R$ ${perfume.value.value5ml.toFixed(2).replace('.', ',')}
         </div>
-        <p class="spray-info" style="margin-top: 0.4rem; font-size: 0.70rem; color: #ccc;">
-          50 borrifadas
-        </p>
-        <button class="btn-add">R$ <span class="price-value">${perfume.value.value5ml}</span></button>
+        <div class="price-pix" style="font-size: 0.85rem; color: #bfa05a; margin-top: 4px;">
+          R$ ${(perfume.value.value5ml * 0.9).toFixed(2).replace('.', ',')} com <span style="font-weight: 700;">Pix 10% off</span>
+        </div>
       </div>
-    `;
-    }
+
+      <button class="btn-add" style="margin-top: 1rem; text-transform: uppercase; font-weight: 700;">
+        Adicionar
+      </button>
+    </div>
+  `;
+} else {
+  card.innerHTML = `
+    <img src="${perfume.image}" alt="${perfume.name}">
+    <div class="card-content">
+      <div class="volume-buttons">
+        <button class="btn-volume" data-volume="2ml">2ml</button>
+        <button class="btn-volume" data-volume="5ml">5ml</button>
+        <button class="btn-volume" data-volume="10ml">10ml</button>
+      </div>
+      <p class="spray-info" style="margin-top: 0.4rem; font-size: 0.70rem; color: #ccc;">
+        50 borrifadas
+      </p>
+
+      <div class="price-container" style="margin-top: 1rem; text-align: center; font-family: 'Montserrat', sans-serif; color: #f0e6c8;">
+        <div class="price-main" style="font-weight: 700; font-size: 1.2rem;">
+          R$ ${perfume.value.value5ml.toFixed(2).replace('.', ',')}
+        </div>
+        <div class="price-pix" style="font-size: 0.85rem; color: #bfa05a; margin-top: 4px;">
+          R$ ${(perfume.value.value5ml * 0.9).toFixed(2).replace('.', ',')} com <span style="font-weight: 700;">Pix 10% off</span>
+        </div>
+      </div>
+
+      <button class="btn-add" style="margin-top: 1rem; text-transform: uppercase; font-weight: 700;">
+        Adicionar
+      </button>
+    </div>
+  `;
+}
+
 
     const btns = card.querySelectorAll(".btn-volume");
     const priceValue = card.querySelector(".price-value");
