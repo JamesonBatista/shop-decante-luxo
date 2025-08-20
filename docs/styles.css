@@ -243,7 +243,8 @@ nav {
 
   #menu-list {
     flex-direction: column;
-    gap: 0.5rem;
+    gap: 1rem;
+    padding: 5px;
     margin-top: 1rem;
     right: 11.5rem;
   }
