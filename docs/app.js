@@ -12,145 +12,131 @@ document.addEventListener("DOMContentLoaded", () => {
   let cart = [];
   const categoriaMain = container.getAttribute("data-categoria");
   // Função para criar um card de perfume
-  function createCard(perfume) {
-    const card = document.createElement("div");
-    card.classList.add("card");
+function createCard(perfume) {
+  const card = document.createElement("div");
+  card.classList.add("card");
 
-    // Cria um id/slug para identificar o produto
-    const productId =
-      perfume.id || perfume.name.replace(/\s+/g, "-").toLowerCase();
-    card.setAttribute("data-product-id", productId);
+  const productId = perfume.id || perfume.name.replace(/\s+/g, "-").toLowerCase();
+  card.setAttribute("data-product-id", productId);
 
-    // Verifica se a categoria é 'combos' e monta o innerHTML conforme solicitado
-if (categoria === "combos") {
-  card.innerHTML = `
-    <img src="${perfume.image}" alt="${perfume.name}">
-    <div class="card-content">
-      <div class="volume-buttons">
-        <button class="btn-volume" data-volume="2ml">2ml</button>
-        <button class="btn-volume" data-volume="5ml">5ml</button>
-        <button class="btn-volume" data-volume="10ml">10ml</button>
-      </div>
-      <p class="spray-info" style="margin-top: 0.4rem; font-size: 0.70rem; color: #ccc;">
-        50 borrifadas
-      </p>
-      <p class="spray-info" style="margin-top: 0.4rem; font-size: 0.70rem; color: #ccc;">
-        ${perfume.description || ""}
-      </p>
-
-      <div class="price-container" style="margin-top: 1rem; text-align: center; font-family: 'Montserrat', sans-serif; color: #f0e6c8;">
-        <div class="price-main" style="font-weight: 700; font-size: 1.2rem;">
-          R$ ${perfume.value.value5ml.toFixed(2).replace('.', ',')}
+  if (categoria === "combos") {
+    card.innerHTML = `
+      <img src="${perfume.image}" alt="${perfume.name}">
+      <div class="card-content">
+        <div class="volume-buttons">
+          <button class="btn-volume" data-volume="2ml">2ml</button>
+          <button class="btn-volume" data-volume="5ml">5ml</button>
+          <button class="btn-volume" data-volume="10ml">10ml</button>
         </div>
-        <div class="price-pix" style="font-size: 0.85rem; color: #bfa05a; margin-top: 4px;">
-          R$ ${(perfume.value.value5ml * 0.9).toFixed(2).replace('.', ',')} com <span style="font-weight: 700;">Pix 10% off</span>
+        <p class="spray-info" style="margin-top: 0.4rem; font-size: 1rem; color: #ccc;" hidden>
+          500 borrifadas
+        </p>
+        <p class="spray-info" style="margin-top: 0.4rem; font-size: 0.70rem; color: #ccc;">
+          ${perfume.description || ""}
+        </p>
+        <div class="price-container" style="margin-top: 1rem; text-align: center; font-family: 'Montserrat', sans-serif; color: #f0e6c8;">
+          <div class="price-main" style="font-weight: 700; font-size: 1.2rem;">
+            R$ ${perfume.value.value5ml.toFixed(2).replace(".", ",")}
+          </div>
+          <div class="price-pix" style="font-size: 0.85rem; color: #bfa05a; margin-top: 4px;">
+            R$ ${(perfume.value.value5ml * 0.95).toFixed(2).replace(".", ",")} com <span style="font-weight: 700;">Pix </span>
+          </div>
         </div>
+        <button class="btn-add" style="margin-top: 1rem; text-transform: uppercase; font-weight: 700;">
+          Adicionar
+        </button>
       </div>
-
-      <button class="btn-add" style="margin-top: 1rem; text-transform: uppercase; font-weight: 700;">
-        Adicionar
-      </button>
-    </div>
-  `;
-} else {
-  card.innerHTML = `
-    <img src="${perfume.image}" alt="${perfume.name}">
-    <div class="card-content">
-      <div class="volume-buttons">
-        <button class="btn-volume" data-volume="2ml">2ml</button>
-        <button class="btn-volume" data-volume="5ml">5ml</button>
-        <button class="btn-volume" data-volume="10ml">10ml</button>
-      </div>
-      <p class="spray-info" style="margin-top: 0.4rem; font-size: 0.70rem; color: #ccc;">
-        50 borrifadas
-      </p>
-
-      <div class="price-container" style="margin-top: 1rem; text-align: center; font-family: 'Montserrat', sans-serif; color: #f0e6c8;">
-        <div class="price-main" style="font-weight: 700; font-size: 1.2rem;">
-          R$ ${perfume.value.value5ml.toFixed(2).replace('.', ',')}
+    `;
+  } else {
+    card.innerHTML = `
+      <img src="${perfume.image}" alt="${perfume.name}">
+      <div class="card-content">
+        <div class="volume-buttons">
+          <button class="btn-volume" data-volume="2ml">2ml</button>
+          <button class="btn-volume" data-volume="5ml">5ml</button>
+          <button class="btn-volume" data-volume="10ml">10ml</button>
         </div>
-        <div class="price-pix" style="font-size: 0.85rem; color: #bfa05a; margin-top: 4px;">
-          R$ ${(perfume.value.value5ml * 0.9).toFixed(2).replace('.', ',')} com <span style="font-weight: 700;">Pix 10% off</span>
+        <p class="spray-info" style="margin-top: 0.4rem; font-size: 1rem; color: #ccc;">
+          50 borrifadas
+        </p>
+        <div class="price-container" style="margin-top: 1rem; text-align: center; font-family: 'Montserrat', sans-serif; color: #f0e6c8;">
+          <div class="price-main" style="font-weight: 700; font-size: 1.2rem;">
+            R$ ${perfume.value.value5ml.toFixed(2).replace(".", ",")}
+          </div>
+          <div class="price-pix" style="font-size: 0.85rem; color: #bfa05a; margin-top: 4px;">
+            R$ ${(perfume.value.value5ml * 0.95).toFixed(2).replace(".", ",")} com <span style="font-weight: 700;">Pix </span>
+          </div>
         </div>
+        <button class="btn-add" style="margin-top: 1rem; text-transform: uppercase; font-weight: 700;">
+          Adicionar
+        </button>
       </div>
-
-      <button class="btn-add" style="margin-top: 1rem; text-transform: uppercase; font-weight: 700;">
-        Adicionar
-      </button>
-    </div>
-  `;
-}
-
-
-    const btns = card.querySelectorAll(".btn-volume");
-    const priceValue = card.querySelector(".price-value");
-    const sprayInfo = card.querySelector(".spray-info");
-    const addBtn = card.querySelector(".btn-add");
-
-    // Volume padrão
-    let selectedVolume = "5ml";
-
-    // Marca botão ativo correspondente ao volume padrão
-    btns.forEach((btn) => {
-      if (btn.getAttribute("data-volume") === selectedVolume) {
-        btn.classList.add("active");
-      }
-    });
-
-    // Atualiza o texto de borrifadas conforme volume selecionado
-    function updateSprayInfo(volume) {
-      switch (volume) {
-        case "2ml":
-          sprayInfo.textContent = "20 borrifadas";
-          break;
-        case "5ml":
-          sprayInfo.textContent = "50 borrifadas";
-          break;
-        case "10ml":
-          sprayInfo.textContent = "100 borrifadas";
-          break;
-        default:
-          sprayInfo.textContent = "";
-      }
-    }
-    updateSprayInfo(selectedVolume);
-
-    // Evento dos botões de volume
-    btns.forEach((btn) => {
-      btn.addEventListener("click", (event) => {
-        event.stopPropagation();
-        btns.forEach((b) => b.classList.remove("active"));
-        btn.classList.add("active");
-        selectedVolume = btn.getAttribute("data-volume");
-
-        // Atualiza o preço
-        if (selectedVolume === "2ml")
-          priceValue.textContent = perfume.value.value2ml;
-        else if (selectedVolume === "5ml")
-          priceValue.textContent = perfume.value.value5ml;
-        else if (selectedVolume === "10ml")
-          priceValue.textContent = perfume.value.value10ml;
-
-        // Atualiza o texto das borrifadas
-        updateSprayInfo(selectedVolume);
-      });
-    });
-
-    // Botão adicionar ao carrinho (impede propagação para não abrir detalhes)
-    addBtn.addEventListener("click", (event) => {
-      event.stopPropagation();
-      addToCart(perfume, selectedVolume);
-    });
-
-    // Clique no card redireciona para página de detalhes, exceto nos botões
-    card.addEventListener("click", (event) => {
-      window.location.href = `detalhes/index.html?product=${encodeURIComponent(
-        productId
-      )}`;
-    });
-
-    return card;
+    `;
   }
+
+  const btns = card.querySelectorAll(".btn-volume");
+  const priceMain = card.querySelector(".price-main");
+  const pricePix = card.querySelector(".price-pix");
+  const sprayInfo = card.querySelector(".spray-info");
+  const addBtn = card.querySelector(".btn-add");
+
+  let selectedVolume = "5ml";
+
+  // Marca botão ativo inicial
+  btns.forEach((btn) => {
+    if (btn.getAttribute("data-volume") === selectedVolume) {
+      btn.classList.add("active");
+    }
+  });
+
+  function updateSprayInfo(volume) {
+    switch (volume) {
+      case "2ml":
+        sprayInfo.textContent = "20 borrifadas";
+        break;
+      case "5ml":
+        sprayInfo.textContent = "50 borrifadas";
+        break;
+      case "10ml":
+        sprayInfo.textContent = "100 borrifadas";
+        break;
+      default:
+        sprayInfo.textContent = "";
+    }
+  }
+  updateSprayInfo(selectedVolume);
+
+  btns.forEach((btn) => {
+    btn.addEventListener("click", (event) => {
+      event.stopPropagation();
+      btns.forEach((b) => b.classList.remove("active"));
+      btn.classList.add("active");
+      selectedVolume = btn.getAttribute("data-volume");
+
+      let precoAtual;
+      if (selectedVolume === "2ml") precoAtual = perfume.value.value2ml;
+      else if (selectedVolume === "5ml") precoAtual = perfume.value.value5ml;
+      else if (selectedVolume === "10ml") precoAtual = perfume.value.value10ml;
+
+      // Atualiza os preços
+      priceMain.textContent = `R$ ${precoAtual.toFixed(2).replace(".", ",")}`;
+      pricePix.textContent = `R$ ${(precoAtual * 0.95).toFixed(2).replace(".", ",")} com Pix`;
+
+      updateSprayInfo(selectedVolume);
+    });
+  });
+
+  addBtn.addEventListener("click", (event) => {
+    event.stopPropagation();
+    addToCart(perfume, selectedVolume);
+  });
+
+  card.addEventListener("click", () => {
+    window.location.href = `detalhes/index.html?product=${encodeURIComponent(productId)}`;
+  });
+
+  return card;
+}
 
   // Adiciona item no carrinho (incrementa se já existe)
   function addToCart(perfume, volume) {
